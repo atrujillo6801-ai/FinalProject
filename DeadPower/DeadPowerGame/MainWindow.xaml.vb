@@ -23,6 +23,14 @@ Class MainWindow
     Dim rightKey As Boolean
     Dim upKey As Boolean
     Dim downKey As Boolean
+    Dim speed As Integer
+
+    Private rectPlayer As Rect
+    Private rectNorth As Rect
+    Private rectSouth As Rect
+    Private rectWest As Rect
+    Private rectEast As Rect
+
 
     Dim basePath As String = System.IO.Directory.GetCurrentDirectory()
     Dim relativePath As String = ""
@@ -107,19 +115,27 @@ Class MainWindow
         ' Set starting room
         currentRoom = entrance
 
+        rectPlayer = imageToRect(imgPlayer)
+        rectNorth = imageToRect(imgNorth)
+        rectEast = imageToRect(imgEast)
+        rectSouth = imageToRect(imgSouth)
+        rectWest = imageToRect(imgWest)
+
         ' Update the screen
         UpdateRoomDisplay()
         UpdateHealthBars()
         UpdateInventoryDisplay()
         AddToLog("My plane was shot down. Maybe this building will provide the means to my escape.")
 
-
+        Me.Focus() ' Set focus to the window to ensure it receives keyboard input
 
         AddHandler CompositionTarget.Rendering, AddressOf GameLoop
 
 
     End Sub
-
+    Private Function imageToRect(sprite As Image) As Rect
+        Return New Rect(Canvas.GetLeft(sprite), Canvas.GetTop(sprite), sprite.Width, sprite.Height)
+    End Function
     Private Sub GameLoop()
 
         If leftKey Then CheckKeyToMove(MoveKey.Left)
@@ -127,7 +143,19 @@ Class MainWindow
         If upKey Then CheckKeyToMove(MoveKey.Up)
         If downKey Then CheckKeyToMove(MoveKey.Down)
 
-
+        If CollisionTestWalls(rectPlayer, rectNorth) Then
+            btnNorth_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the north.")
+        ElseIf CollisionTestWalls(rectPlayer, rectEast) Then
+            btnEast_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the east.")
+        ElseIf CollisionTestWalls(rectPlayer, rectSouth) Then
+            btnSouth_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the south.")
+        ElseIf CollisionTestWalls(rectPlayer, rectWest) Then
+            btnWest_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the West")
+        End If
 
     End Sub
 
@@ -152,7 +180,9 @@ Class MainWindow
 
 
     'Room Logic
-
+    Private Function CollisionTestWalls(objA As Rect, wallObj As Rect) As Boolean
+        Return objA.IntersectsWith(wallObj)
+    End Function
     'Loading a game
     Private Sub LoadGame()
         Dim savePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\save.json")
@@ -419,18 +449,22 @@ Class MainWindow
     End Sub
 
     Private Sub MoveLeft()
+        rectPlayer.X -= 2
         imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left - 2, imgPlayer.Margin.Top, 0, 0)
     End Sub
 
     Private Sub MoveRight()
+        rectPlayer.X += 2
         imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left + 2, imgPlayer.Margin.Top, 0, 0)
     End Sub
 
     Private Sub MoveUp()
+        rectPlayer.Y -= 2
         imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top - 2, 0, 0)
     End Sub
 
     Private Sub MoveDown()
+        rectPlayer.Y += 2
         imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top + 2, 0, 0)
     End Sub
 

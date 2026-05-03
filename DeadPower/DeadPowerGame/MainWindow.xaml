@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeadPowerGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="850">
     <Canvas x:Name="mainCanvas">
         <Canvas.Background>
             <ImageBrush ImageSource="/Assets/images/RoomDark.png"/>
@@ -35,10 +35,10 @@
 
 
         <Label x:Name="lblNpcName" Content="NPC Name" Canvas.Left="670" Canvas.Top="46" Background="#FFFDF6F6"/>
-        <TextBox x:Name="txtNpcDialogue" TextWrapping="Wrap" Text="NPC Dialogue" Width="120" Height="78" Canvas.Left="670" Canvas.Top="250" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNpcDialogue" IsReadOnly="True" TextWrapping="Wrap" Text="NPC Dialogue" Width="120" Height="78" Canvas.Left="670" Canvas.Top="250" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <Button x:Name="btnLightSwitch" Content="Toggle Lights" Canvas.Left="704" Canvas.Top="358" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-       
+
         <TextBox x:Name="txtCombatLog" Grid.Row="3"
                IsReadOnly="True" TextWrapping="Wrap"
                VerticalScrollBarVisibility="Auto"
@@ -54,6 +54,19 @@
         <Button x:Name="btnAttack" Content="⚔ Attack"
               Visibility="Collapsed" Click="btnAttack_Click" Canvas.Left="541" Canvas.Top="231"/>
         <Button x:Name="btnSave" Content="💾 Save Game" Click="btnSave_Click" Canvas.Left="228" Canvas.Top="11"/>
+        <Image x:Name="imgWest" Height="374" Canvas.Left="-18" Canvas.Top="34" Width="41" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="imgEast" Height="374" Canvas.Left="778" Canvas.Top="41" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="imgNorth" Height="58" Canvas.Left="135" Canvas.Top="26" Width="566" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Image x:Name="imgSouth" Height="44" Canvas.Left="55" Canvas.Top="415" Width="706" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
     </Canvas>
 </Window>
