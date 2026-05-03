@@ -144,7 +144,7 @@
     <Resource Include="Assets\images\Zombie.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\images\[2] Main Game Screen %282%29 %28Anthony%29.png">
+    <Resource Include="Assets\images\RoomLight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -152,7 +152,7 @@
     <Resource Include="Assets\images\Soldier.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\images\[2] Main Game Screen %282%29 %28Anthony%29_PowerOff.PNG">
+    <Resource Include="Assets\images\RoomDark.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

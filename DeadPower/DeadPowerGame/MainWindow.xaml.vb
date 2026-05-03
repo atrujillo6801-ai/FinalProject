@@ -153,91 +153,56 @@ Class MainWindow
     '--------------------------------------------------------------------------------------------------------------
 
     'Buttons
-    Private Sub Window_KeyDown(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyDown
-
-        If e.Key = Key.Right Then
-
-            rightKey = True
-
+    Private Sub btnNorth_Click(sender As Object, e As RoutedEventArgs) Handles btnNorth.Click
+        ' Check if the current room has a "North" exit; notice it has to specifically contain it as a string!
+        If currentRoom.Exits.ContainsKey("North") Then
+            Dim nextRoomName As String = currentRoom.Exits("North")
+            currentRoom = gameRooms(nextRoomName)  ' gameRooms is a Dictionary of all rooms, so HOW DO I DECLARE A DICTIONARY?
+            UpdateRoomDisplay()
+            AddToLog("You moved north into " & currentRoom.Name & ".")
+        Else
+            AddToLog("There is no path to the north.")
         End If
-
-
-
-        If e.Key = Key.Left Then
-
-            leftKey = True
-
-        End If
-
-        If e.Key = Key.Up Then
-            upKey = True
-        End If
-
-        If e.Key = Key.Down Then
-            downKey = True
-        End If
-
-
-
-
-
     End Sub
 
-    Private Sub Window_KeyUp(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyUp
-
-        If e.Key = Key.Right Then
-
-            rightKey = False
-
+    Private Sub btnSouth_Click(sender As Object, e As RoutedEventArgs) Handles btnSouth.Click
+        If currentRoom.Exits.ContainsKey("South") Then
+            Dim nextRoomName As String = currentRoom.Exits("South")
+            currentRoom = gameRooms(nextRoomName)
+            UpdateRoomDisplay()
+            AddToLog("You moved south into " & currentRoom.Name & ".")
+            AddToLog("Oh no, the doors have locked! I must find a key.")
+        Else
+            AddToLog("There is no path to the south.")
         End If
+    End Sub
 
-
-
-        If e.Key = Key.Left Then
-
-            leftKey = False
-
+    Private Sub btnEast_Click(sender As Object, e As RoutedEventArgs) Handles btnEast.Click
+        If currentRoom.Exits.ContainsKey("East") Then
+            Dim nextRoomName As String = currentRoom.Exits("East")
+            currentRoom = gameRooms(nextRoomName)
+            UpdateRoomDisplay()
+            AddToLog("You moved east into " & currentRoom.Name & ".")
+        Else
+            AddToLog("There is no path to the east.")
         End If
+    End Sub
 
-        If e.Key = Key.Up Then
-            upKey = False
+    Private Sub btnWest_Click(sender As Object, e As RoutedEventArgs) Handles btnWest.Click
+        If currentRoom.Exits.ContainsKey("West") Then
+            Dim nextRoomName As String = currentRoom.Exits("West")
+            currentRoom = gameRooms(nextRoomName)
+            UpdateRoomDisplay()
+            AddToLog("You moved west into " & currentRoom.Name & ".")
+        Else
+            AddToLog("There is no path to the west.")
         End If
-
-        If e.Key = Key.Down Then
-            downKey = False
-        End If
-
-
-
-
-
     End Sub
 
 
-    Private Sub MoveLeft()
-
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left - 2, imgPlayer.Margin.Top, 0, 0)
-
-    End Sub
-
-    Private Sub MoveRight()
-
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left + 2, imgPlayer.Margin.Top, 0, 0)
-
-    End Sub
 
 
-    Private Sub MoveUp()
 
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top - 2, 0, 0)
-
-    End Sub
-
-    Private Sub MoveDown()
-
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top + 2, 0, 0)
-
-    End Sub
 
     'things that appear or disappear according to the rooms
     Private Sub UpdateRoomDisplay()
@@ -250,7 +215,11 @@ Class MainWindow
 
 
         ' Show/hide direction buttons based on available exits
-
+        btnNorth.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
+        btnSouth.Visibility = If(currentRoom.Exits.ContainsKey("South"), Visibility.Visible, Visibility.Collapsed)
+        btnEast.Visibility = If(currentRoom.Exits.ContainsKey("East"), Visibility.Visible, Visibility.Collapsed)
+        btnWest.Visibility = If(currentRoom.Exits.ContainsKey("West"), Visibility.Visible, Visibility.Collapsed)
+        btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
         btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
         ' Show enemy/NPC/item status
         If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
@@ -310,6 +279,57 @@ Class MainWindow
 
 
     'Main Character MOvement and other actions
+    Private Sub Window_KeyDown(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyDown
+        If e.Key = Key.Right Then
+            rightKey = True
+        End If
+
+        If e.Key = Key.Left Then
+            leftKey = True
+        End If
+
+        If e.Key = Key.Up Then
+            upKey = True
+        End If
+
+        If e.Key = Key.Down Then
+            downKey = True
+        End If
+    End Sub
+
+    Private Sub Window_KeyUp(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyUp
+        If e.Key = Key.Right Then
+            rightKey = False
+        End If
+
+        If e.Key = Key.Left Then
+            leftKey = False
+        End If
+
+        If e.Key = Key.Up Then
+            upKey = False
+        End If
+
+        If e.Key = Key.Down Then
+            downKey = False
+        End If
+    End Sub
+
+    Private Sub MoveLeft()
+        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left - 2, imgPlayer.Margin.Top, 0, 0)
+    End Sub
+
+    Private Sub MoveRight()
+        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left + 2, imgPlayer.Margin.Top, 0, 0)
+    End Sub
+
+    Private Sub MoveUp()
+        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top - 2, 0, 0)
+    End Sub
+
+    Private Sub MoveDown()
+        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top + 2, 0, 0)
+    End Sub
 
     'Main Character 
 
