@@ -11,28 +11,28 @@
       "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\data\\save.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:data\\save.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\models\\enemy.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\enemy.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\models\\player.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\player.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\savedata.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:savedata.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\models\\item.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\item.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\models\\room.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\room.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\models\\item.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
-      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\item.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\models\\enemy.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\enemy.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\savedata.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:savedata.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\data\\save.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:data\\save.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\models\\player.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\player.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +46,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "save.json",
               "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Data\\save.json",
               "RelativeDocumentMoniker": "Data\\save.json",
@@ -54,24 +54,23 @@
               "RelativeToolTip": "Data\\save.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-03T02:07:32.031Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-03T02:07:32.031Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "Room.vb",
               "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Room.vb",
               "RelativeDocumentMoniker": "Models\\Room.vb",
               "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Room.vb",
               "RelativeToolTip": "Models\\Room.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2026-05-02T23:59:30.146Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "Item.vb",
               "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Item.vb",
               "RelativeDocumentMoniker": "Models\\Item.vb",
@@ -83,7 +82,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Player.vb",
               "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Player.vb",
               "RelativeDocumentMoniker": "Models\\Player.vb",
@@ -91,33 +90,19 @@
               "RelativeToolTip": "Models\\Player.vb",
               "ViewState": "AgIAAA0AAAAAAAAAAAA4wBkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-05-02T23:58:24.806Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-02T23:58:24.806Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Enemy.vb",
               "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Enemy.vb",
               "RelativeDocumentMoniker": "Models\\Enemy.vb",
               "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Enemy.vb",
               "RelativeToolTip": "Models\\Enemy.vb",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAqwBsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-05-02T23:53:26.671Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SaveData.vb",
-              "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\SaveData.vb",
-              "RelativeDocumentMoniker": "SaveData.vb",
-              "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\SaveData.vb",
-              "RelativeToolTip": "SaveData.vb",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
-              "WhenOpened": "2026-05-02T23:40:22.409Z"
+              "WhenOpened": "2026-05-02T23:53:26.671Z"
             },
             {
               "$type": "Document",
@@ -128,8 +113,19 @@
               "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-29T06:39:37.138Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-29T06:39:37.138Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SaveData.vb",
+              "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\SaveData.vb",
+              "RelativeDocumentMoniker": "SaveData.vb",
+              "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\SaveData.vb",
+              "RelativeToolTip": "SaveData.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-05-02T23:40:22.409Z"
             },
             {
               "$type": "Document",
@@ -139,7 +135,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.vb",
               "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\MainWindow.xaml.vb",
               "RelativeToolTip": "MainWindow.xaml.vb",
-              "ViewState": "AgIAAE4BAAAAAAAAAAAowGIBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACQBAAAAAAAAAAAcwAwAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2026-04-29T06:39:36.402Z",
               "EditorCaption": ""

@@ -38,8 +38,7 @@
         <TextBox x:Name="txtNpcDialogue" TextWrapping="Wrap" Text="NPC Dialogue" Width="120" Height="78" Canvas.Left="670" Canvas.Top="250" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <Button x:Name="btnLightSwitch" Content="Toggle Lights" Canvas.Left="704" Canvas.Top="358" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBlock Text="Room is clear." TextWrapping="Wrap" Canvas.Left="670" Canvas.Top="122" Background="#FFECDCDC"/>
-
+       
         <TextBox x:Name="txtCombatLog" Grid.Row="3"
                IsReadOnly="True" TextWrapping="Wrap"
                VerticalScrollBarVisibility="Auto"

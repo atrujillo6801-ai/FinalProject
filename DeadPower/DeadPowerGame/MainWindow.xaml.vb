@@ -29,7 +29,21 @@ Class MainWindow
     Dim fullPath As String = Path.Combine(basePath, relativePath)
 
 
+    Dim flashlight As New Item With {
+        .Name = "Flashlight",
+        .Description = "A handy flashlight to illuminate dark rooms.",
+        .HealAmount = 0,
+        .AttackBonus = 0,
+        .ItemType = "Tool"
+    }
 
+    Dim radio As New Item With {
+        .Name = "Emergency Radio",
+        .Description = "A radio that can call for help if you can find a way to power it.",
+        .HealAmount = 0,
+        .AttackBonus = 0,
+        .ItemType = "Tool"
+    }
 
 
 
@@ -45,6 +59,7 @@ Class MainWindow
         ' Create dictionary of rooms
         gameRooms = New Dictionary(Of String, Room)
 
+
         ' Create player
         player = New Player("Sam Stones")
         lblPlayerName.Content = player.Name
@@ -55,6 +70,7 @@ Class MainWindow
         entrance.Name = "West Entrance Hall"
         entrance.Description = "Looks like a deserted building. I wonder if I can find a radio inside? (Use your keyboard keys to explore rooms)."
         entrance.Exits.Add("East", "East Dark Room")
+        entrance.Item = flashlight
 
         Dim eastRoom As New Room()
         eastRoom.Name = "East Dark Room"
@@ -68,7 +84,7 @@ Class MainWindow
         northRoom.Name = "North Zombie Room"
         northRoom.Description = "You find an unexpected guest."
         northRoom.Exits.Add("South", "East Dark Room")
-
+        northRoom.Enemy = New Enemy("Zombie", 100, 10)
 
 
         Dim southRoom As New Room()
@@ -76,7 +92,7 @@ Class MainWindow
         southRoom.Description = "A glint catches your eye from the corner of the room."
         southRoom.Exits.Add("North", "East Dark Room")
 
-        northRoom.Enemy = New Enemy("Zombie", 100, 10)
+
 
 
 
@@ -214,6 +230,7 @@ Class MainWindow
         btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
         ' Show enemy/NPC/item status
         If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
+            lblNpcName.Content = currentRoom.Enemy.Name
             lblEnemyStatus.Content = "Enemy present: " & currentRoom.Enemy.Name
             btnAttack.Visibility = Visibility.Visible
             imgEnemy.Visibility = Visibility.Visible
