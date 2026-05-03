@@ -37,7 +37,7 @@
         <Label x:Name="lblNpcName" Content="NPC Name" Canvas.Left="670" Canvas.Top="46" Background="#FFFDF6F6"/>
         <TextBox x:Name="txtNpcDialogue" TextWrapping="Wrap" Text="NPC Dialogue" Width="120" Height="78" Canvas.Left="670" Canvas.Top="250" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-        <Button x:Name="btnLightSwitch" Content="Toggle Lights" Canvas.Left="704" Canvas.Top="295"/>
+        <Button x:Name="btnLightSwitch" Content="Toggle Lights" Canvas.Left="704" Canvas.Top="358" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <TextBlock Text="Room is clear." TextWrapping="Wrap" Canvas.Left="670" Canvas.Top="122" Background="#FFECDCDC"/>
 
         <TextBox x:Name="txtCombatLog" Grid.Row="3"
@@ -52,7 +52,9 @@
         <Button x:Name="btnSouth" Content="▼ South" Width="131" Click="btnSouth_Click" HorizontalAlignment="Left" Canvas.Left="356" Canvas.Top="331" VerticalAlignment="Top"/>
         <Button x:Name="btnEast"  Content="▶ East"  Width="90" Click="btnEast_Click" Canvas.Left="670" Canvas.Top="221"/>
         <Button x:Name="btnWest"  Content="◀ West"  Width="90" Click="btnWest_Click" Canvas.Left="10" Canvas.Top="226"/>
-
+        <Button x:Name="btnAttack" Content="⚔ Attack"
+              Visibility="Collapsed" Click="btnAttack_Click" Canvas.Left="541" Canvas.Top="231"/>
+        <Button x:Name="btnSave" Content="💾 Save Game" Click="btnSave_Click" Canvas.Left="228" Canvas.Top="11"/>
 
     </Canvas>
 </Window>

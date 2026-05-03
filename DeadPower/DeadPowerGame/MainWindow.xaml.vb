@@ -5,9 +5,6 @@ Imports Newtonsoft.Json
 
 
 Class MainWindow
-
-
-
     '--------------------------------------------------------------------------------------------------------------
     'Declarations for Variables that are used across the entire code 
     '--------------------------------------------------------------------------------------------------------------
@@ -124,7 +121,10 @@ Class MainWindow
                 MoveLeft()
             Case isKeyMove.Right
                 MoveRight()
-
+            Case isKeyMove.Up
+                MoveUp()
+            Case isKeyMove.Down
+                MoveDown()
             Case Else
 
 
@@ -138,15 +138,123 @@ Class MainWindow
     'Room Logic
 
     'Loading a game
+    Private Sub LoadGame()
+        Dim savePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\save.json")
+
+        If Not File.Exists(savePath) Then
+            AddToLog("No save file found. Starting new game.")
+            Return
+        End If
+
+        Dim json As String = File.ReadAllText(savePath)
+        Dim saveData As SaveData = JsonConvert.DeserializeObject(Of SaveData)(json)
+
+        ' Restore the player from saved data
+        player = New Player(saveData.Name)
+        player.Health = saveData.Health
+        player.MaxHealth = saveData.MaxHealth
+        player.AttackPower = saveData.AttackPower
+        player.Gold = saveData.Gold
+        player.Inventory = saveData.Inventory
+
+        ' Restore the room
+        currentRoom = gameRooms(saveData.CurrentRoom)
+
+        UpdateRoomDisplay()
+        UpdateHealthBars()
+        UpdateInventoryDisplay()
+        AddToLog("Save loaded. Welcome back, " & player.Name & "!")
+    End Sub
 
     'Saving a game
+    Private Sub SaveGame()
+        Dim saveData As New SaveData ' a simple data-transfer class (see below)
+        saveData.Name = player.Name
+        saveData.Health = player.Health
+        saveData.MaxHealth = player.MaxHealth
+        saveData.AttackPower = player.AttackPower
+        saveData.Gold = player.Gold
+        saveData.CurrentRoom = currentRoom.Name
+        saveData.Inventory = player.Inventory
+
+        Dim json As String = JsonConvert.SerializeObject(saveData, Formatting.Indented)
+        Dim savePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\save.json")
+        File.WriteAllText(savePath, json)
+        AddToLog("Game saved successfully.")
+    End Sub
 
     'GameOver
+    Sub ShowGameOver() ' Had to declare from scratch. Used suggestion from VS
+        MessageBox.Show("Game Over! Thanks for playing.")
+        Application.Current.Shutdown()
+    End Sub
 
     'updating functions defined here
+    Private Sub UpdateRoomDisplay()
+        lblRoomName.Content = currentRoom.Name
+
+
+        ' Change background based on lights
+        If lightsOn Then
+            relativePath = "Assets\images\RoomLight.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        Else
+            relativePath = "Assets\images\RoomDark.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        End If
 
 
 
+        ' Show/hide direction buttons based on available exits
+        btnNorth.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
+        btnSouth.Visibility = If(currentRoom.Exits.ContainsKey("South"), Visibility.Visible, Visibility.Collapsed)
+        btnEast.Visibility = If(currentRoom.Exits.ContainsKey("East"), Visibility.Visible, Visibility.Collapsed)
+        btnWest.Visibility = If(currentRoom.Exits.ContainsKey("West"), Visibility.Visible, Visibility.Collapsed)
+        btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
+        btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
+        ' Show enemy/NPC/item status
+        If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
+            lblEnemyStatus.Content = "Enemy present: " & currentRoom.Enemy.Name
+            btnAttack.Visibility = Visibility.Visible
+            imgEnemy.Visibility = Visibility.Visible
+            txtNpcDialogue.Text = "No Escape! RAHHHHH!"
+            'placing player and enemy in combat 
+            imgPlayer.HorizontalAlignment = HorizontalAlignment.Left
+            imgPlayer.Margin = New Thickness(40, 0, 0, 40)
+
+            imgEnemy.HorizontalAlignment = HorizontalAlignment.Right
+            imgEnemy.Margin = New Thickness(0, 0, 40, 40)
+        Else
+            lblEnemyStatus.Content = "Room is clear."
+            'btnAttack.Visibility = Visibility.Collapsed
+            imgEnemy.Visibility = Visibility.Collapsed
+
+            imgPlayer.HorizontalAlignment = HorizontalAlignment.Center
+            imgPlayer.Margin = New Thickness(0, 0, 0, 40)
+
+
+        End If
+    End Sub
+
+    Sub UpdateInventoryDisplay() ' Had to declare this as a subroutine so I can call it from other places (like when player picks up loot)
+        lstInventory.Items.Clear()
+        For Each item As String In player.Inventory
+            lstInventory.Items.Add(item)
+        Next
+    End Sub
+
+    Private Sub UpdateHealthBars()
+        ' Player health bar (a WPF ProgressBar named pbarPlayerHealth)
+        pbarPlayerHealth.Value = player.Health
+        pbarPlayerHealth.Maximum = player.MaxHealth
+        lblPlayerHealth.Content = player.Health & " / " & player.MaxHealth
+
+        ' Enemy health bar
+        If currentRoom.Enemy IsNot Nothing Then
+            pbarEnemyHealth.Value = Math.Max(0, currentRoom.Enemy.Health)
+            pbarEnemyHealth.Maximum = currentRoom.Enemy.MaxHealth
+        End If
+    End Sub
 
     '--------------------------------------------------------------------------------------------------------------
     'Interactive UI Logic
@@ -199,78 +307,56 @@ Class MainWindow
         End If
     End Sub
 
+    Private Sub btnAttack_Click(sender As Object, e As RoutedEventArgs) Handles btnAttack.Click
+        Dim enemy As Enemy = currentRoom.Enemy
 
+        ' Player attacks first
+        Dim playerDamage As Integer = player.Attack(enemy)
+        AddToLog("You deal " & playerDamage & " damage to " & enemy.Name & "!")
+        UpdateHealthBars()
 
+        If Not enemy.IsAlive() Then
+            AddToLog(enemy.Name & " has been defeated!")
+            HandleEnemyDefeat(enemy)
+            txtNpcDialogue.Text = "bleh"
+            Return
+        End If
 
+        ' Enemy counter-attacks
+        Dim enemyDamage As Integer = enemy.AttackPlayer(player)
+        AddToLog(enemy.Name & " strikes back for " & enemyDamage & " damage!")
+        UpdateHealthBars()
 
-
-    'things that appear or disappear according to the rooms
-    Private Sub UpdateRoomDisplay()
-        lblRoomName.Content = currentRoom.Name
-
-
-        ' Change background based on lights
-
-
-
-
-        ' Show/hide direction buttons based on available exits
-        btnNorth.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
-        btnSouth.Visibility = If(currentRoom.Exits.ContainsKey("South"), Visibility.Visible, Visibility.Collapsed)
-        btnEast.Visibility = If(currentRoom.Exits.ContainsKey("East"), Visibility.Visible, Visibility.Collapsed)
-        btnWest.Visibility = If(currentRoom.Exits.ContainsKey("West"), Visibility.Visible, Visibility.Collapsed)
-        btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
-        btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
-        ' Show enemy/NPC/item status
-        If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
-            lblEnemyStatus.Content = "Enemy present: " & currentRoom.Enemy.Name
-            ' btnAttack.Visibility = Visibility.Visible
-            imgEnemy.Visibility = Visibility.Visible
-            txtNpcDialogue.Text = "No Escape! RAHHHHH!"
-            'placing player and enemy in combat 
-            imgPlayer.HorizontalAlignment = HorizontalAlignment.Left
-            imgPlayer.Margin = New Thickness(40, 0, 0, 40)
-
-            imgEnemy.HorizontalAlignment = HorizontalAlignment.Right
-            imgEnemy.Margin = New Thickness(0, 0, 40, 40)
-        Else
-            lblEnemyStatus.Content = "Room is clear."
-            'btnAttack.Visibility = Visibility.Collapsed
-            imgEnemy.Visibility = Visibility.Collapsed
-
-            imgPlayer.HorizontalAlignment = HorizontalAlignment.Center
-            imgPlayer.Margin = New Thickness(0, 0, 0, 40)
-
-
+        If Not player.IsAlive() Then
+            AddToLog("You have been defeated... Game Over.")
+            ShowGameOver() ' needed to be declared
         End If
     End Sub
+
+
+    Private Sub btnSave_Click(sender As Object, e As RoutedEventArgs) Handles btnSave.Click
+        SaveGame()
+    End Sub
+
+    Private Sub btnLightSwitch_Click(sender As Object, e As RoutedEventArgs) Handles btnLightSwitch.Click
+        lightsOn = Not lightsOn
+
+        If lightsOn Then
+            AddToLog("Lights turned ON . . . What is this place?")
+            AddToLog("The faster I find a radio, the faster I can leave this hell hole.")
+        Else
+            AddToLog("Lights turned OFF")
+        End If
+
+        UpdateRoomDisplay()
+    End Sub
+    'things that appear or disappear according to the rooms
 
     Private Sub AddToLog(message As String)
         txtCombatLog.AppendText(vbCrLf & message)
         txtCombatLog.ScrollToEnd()
     End Sub
 
-
-
-    Sub UpdateInventoryDisplay() ' Had to declare this as a subroutine so I can call it from other places (like when player picks up loot)
-        lstInventory.Items.Clear()
-        For Each item As String In player.Inventory
-            lstInventory.Items.Add(item)
-        Next
-    End Sub
-
-    Private Sub UpdateHealthBars()
-        ' Player health bar (a WPF ProgressBar named pbarPlayerHealth)
-        pbarPlayerHealth.Value = player.Health
-        pbarPlayerHealth.Maximum = player.MaxHealth
-        lblPlayerHealth.Content = player.Health & " / " & player.MaxHealth
-
-        ' Enemy health bar
-        If currentRoom.Enemy IsNot Nothing Then
-            pbarEnemyHealth.Value = Math.Max(0, currentRoom.Enemy.Health)
-            pbarEnemyHealth.Maximum = currentRoom.Enemy.MaxHealth
-        End If
-    End Sub
 
     '--------------------------------------------------------------------------------------------------------------
     'Main Character Logic
@@ -341,6 +427,18 @@ Class MainWindow
     '--------------------------------------------------------------------------------------------------------------
 
     'Enemy Defeat
+    Private Sub HandleEnemyDefeat(enemy As Enemy)
+        If enemy.LootDrop <> "" Then
+            player.PickUpItem(enemy.LootDrop)
+            AddToLog("You found: " & enemy.LootDrop)
+            UpdateInventoryDisplay() ' needed to be declared
+        End If
+        btnAttack.Visibility = Visibility.Collapsed
+
+        UpdateRoomDisplay()
+        UpdateHealthBars()
+        AddToLog("The room is now clear.")
+    End Sub
 
     'Enemy Movement
 
