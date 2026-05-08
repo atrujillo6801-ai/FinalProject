@@ -9,10 +9,10 @@ Class MainWindow
     'Declarations for Variables that are used across the entire code 
     '--------------------------------------------------------------------------------------------------------------
     Enum MoveKey
-        Left = 0
-        Right = 1
-        Up = 2
-        Down = 3
+        A = 0
+        D = 1
+        W = 2
+        S = 3
     End Enum
 
     Dim currentRoom As Room
@@ -95,11 +95,6 @@ Class MainWindow
         northRoom.Enemy = New Enemy("Zombie", 100, 10)
 
 
-        Dim southRoom As New Room()
-        southRoom.Name = "South Key Room"
-        southRoom.Description = "A glint catches your eye from the corner of the room."
-        southRoom.Exits.Add("North", "East Dark Room")
-
 
 
 
@@ -108,7 +103,7 @@ Class MainWindow
         gameRooms.Add(entrance.Name, entrance)
         gameRooms.Add(northRoom.Name, northRoom)
         gameRooms.Add(eastRoom.Name, eastRoom)
-        gameRooms.Add(southRoom.Name, southRoom)
+
 
 
 
@@ -127,6 +122,7 @@ Class MainWindow
         UpdateInventoryDisplay()
         AddToLog("My plane was shot down. Maybe this building will provide the means to my escape.")
 
+
         Me.Focus() ' Set focus to the window to ensure it receives keyboard input
 
         AddHandler CompositionTarget.Rendering, AddressOf GameLoop
@@ -138,36 +134,25 @@ Class MainWindow
     End Function
     Private Sub GameLoop()
 
-        If leftKey Then CheckKeyToMove(MoveKey.Left)
-        If rightKey Then CheckKeyToMove(MoveKey.Right)
-        If upKey Then CheckKeyToMove(MoveKey.Up)
-        If downKey Then CheckKeyToMove(MoveKey.Down)
+        If leftKey Then CheckKeyToMove(MoveKey.A)
+        If rightKey Then CheckKeyToMove(MoveKey.D)
+        If upKey Then CheckKeyToMove(MoveKey.W)
+        If downKey Then CheckKeyToMove(MoveKey.S)
 
-        If CollisionTestWalls(rectPlayer, rectNorth) Then
-            btnNorth_Click(Nothing, Nothing)
-            AddToLog("You bumped into a wall to the north.")
-        ElseIf CollisionTestWalls(rectPlayer, rectEast) Then
-            btnEast_Click(Nothing, Nothing)
-            AddToLog("You bumped into a wall to the east.")
-        ElseIf CollisionTestWalls(rectPlayer, rectSouth) Then
-            btnSouth_Click(Nothing, Nothing)
-            AddToLog("You bumped into a wall to the south.")
-        ElseIf CollisionTestWalls(rectPlayer, rectWest) Then
-            btnWest_Click(Nothing, Nothing)
-            AddToLog("You bumped into a wall to the West")
-        End If
 
+        CheckCollision()
+        Me.UpdateLayout() ' Refresh the layout to reflect any changes in positions or collisions
     End Sub
 
     Private Sub CheckKeyToMove(isKeyMove As MoveKey)
         Select Case isKeyMove
-            Case isKeyMove.Left
+            Case isKeyMove.A
                 MoveLeft()
-            Case isKeyMove.Right
+            Case isKeyMove.D
                 MoveRight()
-            Case isKeyMove.Up
+            Case isKeyMove.W
                 MoveUp()
-            Case isKeyMove.Down
+            Case isKeyMove.S
                 MoveDown()
             Case Else
 
@@ -183,6 +168,23 @@ Class MainWindow
     Private Function CollisionTestWalls(objA As Rect, wallObj As Rect) As Boolean
         Return objA.IntersectsWith(wallObj)
     End Function
+
+    Sub CheckCollision()
+        If CollisionTestWalls(rectPlayer, rectNorth) Then
+            btnNorth_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the north.")
+        ElseIf CollisionTestWalls(rectPlayer, rectEast) Then
+            btnEast_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the east.")
+        ElseIf CollisionTestWalls(rectPlayer, rectSouth) Then
+            btnSouth_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the south.")
+        ElseIf CollisionTestWalls(rectPlayer, rectWest) Then
+            btnWest_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the West")
+        End If
+    End Sub
+
     'Loading a game
     Private Sub LoadGame()
         Dim savePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\save.json")
@@ -413,37 +415,37 @@ Class MainWindow
 
     'Main Character MOvement and other actions
     Private Sub Window_KeyDown(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyDown
-        If e.Key = Key.Right Then
+        If e.Key = Key.D Then
             rightKey = True
         End If
 
-        If e.Key = Key.Left Then
+        If e.Key = Key.A Then
             leftKey = True
         End If
 
-        If e.Key = Key.Up Then
+        If e.Key = Key.W Then
             upKey = True
         End If
 
-        If e.Key = Key.Down Then
+        If e.Key = Key.S Then
             downKey = True
         End If
     End Sub
 
     Private Sub Window_KeyUp(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyUp
-        If e.Key = Key.Right Then
+        If e.Key = Key.D Then
             rightKey = False
         End If
 
-        If e.Key = Key.Left Then
+        If e.Key = Key.A Then
             leftKey = False
         End If
 
-        If e.Key = Key.Up Then
+        If e.Key = Key.W Then
             upKey = False
         End If
 
-        If e.Key = Key.Down Then
+        If e.Key = Key.S Then
             downKey = False
         End If
     End Sub
