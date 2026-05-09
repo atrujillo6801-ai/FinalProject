@@ -75,7 +75,8 @@ Class MainWindow
         eastRoom.Description = "Looks like the power is down. Maybe there is a breaker or an auxilary generator somewhere."
         eastRoom.Exits.Add("West", "West Entrance Hall")
         eastRoom.Exits.Add("North", "North Zombie Room")
-
+        eastRoom.Enemy = New Enemy("Zombie", 100, 10)
+        eastRoom.Enemy.LootDrop = "Rusty Key"
 
 
 
@@ -85,7 +86,7 @@ Class MainWindow
         northRoom.Description = "You find an unexpected guest."
         northRoom.Exits.Add("South", "East Dark Room")
         northRoom.Enemy = New Enemy("Zombie", 100, 10)
-        northRoom.Enemy.LootDrop = "Rusty Key"
+
 
 
 
@@ -362,26 +363,27 @@ Class MainWindow
 
     Private Sub btnAttack_Click(sender As Object, e As RoutedEventArgs) Handles btnAttack.Click
         Dim enemy As Enemy = currentRoom.Enemy
+        If enemy IsNot Nothing Then
+            ' Player attacks first
+            Dim playerDamage As Integer = player.Attack(enemy)
+            AddToLog("You deal " & playerDamage & " damage to " & enemy.Name & "!")
+            UpdateHealthBars()
 
-        ' Player attacks first
-        Dim playerDamage As Integer = player.Attack(enemy)
-        AddToLog("You deal " & playerDamage & " damage to " & enemy.Name & "!")
-        UpdateHealthBars()
+            If Not enemy.IsAlive() Then
+                AddToLog(enemy.Name & " has been defeated!")
+                HandleEnemyDefeat(enemy)
+                Return
+            End If
 
-        If Not enemy.IsAlive() Then
-            AddToLog(enemy.Name & " has been defeated!")
-            HandleEnemyDefeat(enemy)
-            Return
-        End If
+            ' Enemy counter-attacks
+            Dim enemyDamage As Integer = enemy.AttackPlayer(player)
+            AddToLog(enemy.Name & " strikes back for " & enemyDamage & " damage!")
+            UpdateHealthBars()
 
-        ' Enemy counter-attacks
-        Dim enemyDamage As Integer = enemy.AttackPlayer(player)
-        AddToLog(enemy.Name & " strikes back for " & enemyDamage & " damage!")
-        UpdateHealthBars()
-
-        If Not player.IsAlive() Then
-            AddToLog("You have been defeated... Game Over.")
-            ShowGameOver() ' needed to be declared
+            If Not player.IsAlive() Then
+                AddToLog("You have been defeated... Game Over.")
+                ShowGameOver() ' needed to be declared
+            End If
         End If
     End Sub
 
@@ -433,6 +435,10 @@ Class MainWindow
         If e.Key = Key.S Then
             downKey = True
         End If
+
+        If e.Key = Key.Space Then
+            spaceKey = True
+        End If
     End Sub
 
     Private Sub Window_KeyUp(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyUp
@@ -450,6 +456,10 @@ Class MainWindow
 
         If e.Key = Key.S Then
             downKey = False
+        End If
+
+        If e.Key = Key.Space Then
+            spaceKey = False
         End If
     End Sub
 
@@ -472,6 +482,8 @@ Class MainWindow
         rectPlayer.Y += 2
         imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top + 2, 0, 0)
     End Sub
+
+
 
     'Main Character 
 
