@@ -5,5 +5,8 @@
   "AttackPower": 15,
   "Gold": 0,
   "CurrentRoom": "North Zombie Room",
-  "Inventory": []
+  "Inventory": [
+    "Rusty Key",
+    "Rusty Key"
+  ]
 }

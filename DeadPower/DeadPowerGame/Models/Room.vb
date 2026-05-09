@@ -9,4 +9,5 @@
     Public Property NpcName As String
     Public Property NpcDialogue As String
 
+
 End Class

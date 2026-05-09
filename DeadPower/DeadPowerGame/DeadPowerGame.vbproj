@@ -149,6 +149,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\images\Skinny Zombie.png" />
     <Resource Include="Assets\images\PowerRoom.png" />
     <Resource Include="Assets\images\Radio room.png" />
     <Resource Include="Assets\images\Key.png" />

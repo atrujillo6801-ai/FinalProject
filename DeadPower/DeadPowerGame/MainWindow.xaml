@@ -55,11 +55,12 @@
                FontFamily="Consolas" FontSize="12" Canvas.Left="144" Canvas.Top="364" HorizontalAlignment="Left" VerticalAlignment="Top" Width="512" Height="40"/>
         <Image x:Name="imgPlayer" Height="100" Canvas.Left="180" Canvas.Top="250" Width="100" Source="/Assets/images/Soldier.png"/>
         <Image x:Name="imgEnemy" Height="100" Canvas.Left="528" Canvas.Top="273" Width="100" Source="/Assets/images/Zombie.png"/>
+        
 
-        <Button x:Name="btnNorth" Content="▲ North" Width="120" Click="btnNorth_Click" HorizontalAlignment="Left" Canvas.Left="340" Canvas.Top="11" VerticalAlignment="Top"/>
-        <Button x:Name="btnSouth" Content="▼ South" Width="131" Click="btnSouth_Click" HorizontalAlignment="Left" Canvas.Left="356" Canvas.Top="331" VerticalAlignment="Top"/>
-        <Button x:Name="btnEast"  Content="▶ East"  Width="90" Click="btnEast_Click" Canvas.Left="670" Canvas.Top="221"/>
-        <Button x:Name="btnWest"  Content="◀ West"  Width="90" Click="btnWest_Click" Canvas.Left="10" Canvas.Top="226"/>
+        <Button x:Name="btnNorth" Content="▲ North" Width="120" Click="btnNorth_Click" HorizontalAlignment="Left" Canvas.Left="340" Canvas.Top="11" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFEEECEC" BorderBrush="{x:Null}" FontFamily="Stencil"/>
+        <Button x:Name="btnSouth" Content="▼ South" Width="131" Click="btnSouth_Click" HorizontalAlignment="Left" Canvas.Left="356" Canvas.Top="331" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFF0EAEA" BorderBrush="{x:Null}" FontFamily="Stencil"/>
+        <Button x:Name="btnEast"  Content="▶ East"  Width="90" Click="btnEast_Click" Canvas.Left="670" Canvas.Top="221" Background="{x:Null}" Foreground="#FFEBDADA" BorderBrush="{x:Null}" FontFamily="Stencil"/>
+        <Button x:Name="btnWest"  Content="◀ West"  Width="90" Click="btnWest_Click" Canvas.Left="10" Canvas.Top="226" Background="{x:Null}" Foreground="#FFF0EBEB" BorderBrush="{x:Null}" FontFamily="Stencil"/>
         <Button x:Name="btnAttack" Content="⚔ Attack"
               Visibility="Collapsed" Click="btnAttack_Click" Canvas.Left="541" Canvas.Top="231"/>
         <Button x:Name="btnSave" Content="💾 Save Game" Click="btnSave_Click" Canvas.Left="228" Canvas.Top="11"/>

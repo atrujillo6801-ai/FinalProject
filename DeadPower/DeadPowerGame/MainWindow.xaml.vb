@@ -13,6 +13,7 @@ Class MainWindow
         D = 1
         W = 2
         S = 3
+        Space = 4
     End Enum
 
     Dim currentRoom As Room
@@ -23,6 +24,7 @@ Class MainWindow
     Dim rightKey As Boolean
     Dim upKey As Boolean
     Dim downKey As Boolean
+    Dim spaceKey As Boolean
     Dim speed As Integer
 
     Private rectPlayer As Rect
@@ -32,26 +34,14 @@ Class MainWindow
     Private rectEast As Rect
 
 
+
+
     Dim basePath As String = System.IO.Directory.GetCurrentDirectory()
     Dim relativePath As String = ""
     Dim fullPath As String = Path.Combine(basePath, relativePath)
 
 
-    Dim flashlight As New Item With {
-        .Name = "Flashlight",
-        .Description = "A handy flashlight to illuminate dark rooms.",
-        .HealAmount = 0,
-        .AttackBonus = 0,
-        .ItemType = "Tool"
-    }
 
-    Dim radio As New Item With {
-        .Name = "Emergency Radio",
-        .Description = "A radio that can call for help if you can find a way to power it.",
-        .HealAmount = 0,
-        .AttackBonus = 0,
-        .ItemType = "Tool"
-    }
 
 
 
@@ -78,14 +68,16 @@ Class MainWindow
         entrance.Name = "West Entrance Hall"
         entrance.Description = "Looks like a deserted building. I wonder if I can find a radio inside? (Use your keyboard keys to explore rooms)."
         entrance.Exits.Add("East", "East Dark Room")
-        entrance.Item = flashlight
+
 
         Dim eastRoom As New Room()
         eastRoom.Name = "East Dark Room"
         eastRoom.Description = "Looks like the power is down. Maybe there is a breaker or an auxilary generator somewhere."
         eastRoom.Exits.Add("West", "West Entrance Hall")
         eastRoom.Exits.Add("North", "North Zombie Room")
-        eastRoom.Exits.Add("South", "South Key Room")
+
+
+
 
 
         Dim northRoom As New Room()
@@ -128,21 +120,34 @@ Class MainWindow
 
         AddHandler CompositionTarget.Rendering, AddressOf GameLoop
 
+        Dim leftOffset As Double = 10 ' left margin inside room area (matches imgRoom Margin)
+        Dim topOffset As Double = 10
+        Dim roomWidth As Double = mainCanvas.ActualWidth
+        Dim roomHeight As Double = mainCanvas.ActualHeight
+        If roomWidth = 0 Then roomWidth = 400 ' fallback
+        If roomHeight = 0 Then roomHeight = 300
+
+
 
     End Sub
     Private Function imageToRect(sprite As Image) As Rect
         Return New Rect(Canvas.GetLeft(sprite), Canvas.GetTop(sprite), sprite.Width, sprite.Height)
     End Function
     Private Sub GameLoop()
-
+        Me.Focus() ' Ensure the window has focus to receive keyboard input
         If leftKey Then CheckKeyToMove(MoveKey.A)
         If rightKey Then CheckKeyToMove(MoveKey.D)
         If upKey Then CheckKeyToMove(MoveKey.W)
         If downKey Then CheckKeyToMove(MoveKey.S)
-
+        If spaceKey Then CheckKeyToMove(MoveKey.Space)
 
         CheckCollision()
-        Me.UpdateLayout() ' Refresh the layout to reflect any changes in positions or collisions
+        CollisionTestWalls(rectPlayer, rectNorth)
+        CollisionTestWalls(rectPlayer, rectEast)
+        CollisionTestWalls(rectPlayer, rectSouth)
+        CollisionTestWalls(rectPlayer, rectWest)
+
+
     End Sub
 
     Private Sub CheckKeyToMove(isKeyMove As MoveKey)
@@ -155,6 +160,8 @@ Class MainWindow
                 MoveUp()
             Case isKeyMove.S
                 MoveDown()
+            Case isKeyMove.Space
+                btnAttack_Click(Nothing, Nothing) ' Simulate attack button click when space is pressed
             Case Else
 
 
