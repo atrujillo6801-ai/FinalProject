@@ -252,8 +252,14 @@ Class MainWindow
 
 
         ' Change background based on lights
-        If lightsOn Then
+        If currentRoom.Name = "West Entrance Hall" Then
             relativePath = "Assets\images\RoomLight.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        ElseIf currentRoom.Name = "North Zombie Room" And lightsOn Then
+            relativePath = "Assets\images\RadioRoom.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        ElseIf currentRoom.Name = "East Dark Room" And lightsOn Then
+            relativePath = "Assets\images\PowerRoom.png"
             mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
         Else
             relativePath = "Assets\images\RoomDark.png"
@@ -280,7 +286,7 @@ Class MainWindow
             imgEnemy.HorizontalAlignment = HorizontalAlignment.Right
             imgEnemy.Margin = New Thickness(0, 0, 40, 40)
         Else
-            'btnAttack.Visibility = Visibility.Collapsed
+            btnAttack.Visibility = Visibility.Collapsed
             imgEnemy.Visibility = Visibility.Collapsed
 
             imgPlayer.HorizontalAlignment = HorizontalAlignment.Center

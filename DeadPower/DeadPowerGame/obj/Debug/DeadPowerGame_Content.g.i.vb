@@ -11,6 +11,8 @@
 Option Strict Off
 Option Explicit On
 
-<Assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/images/roomlight.png"),  _
+<Assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/images/powerroom.png"),  _
+ Assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/images/radioroom.png"),  _
+ Assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/images/roomlight.png"),  _
  Assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/images/roomdark.png")> 
 

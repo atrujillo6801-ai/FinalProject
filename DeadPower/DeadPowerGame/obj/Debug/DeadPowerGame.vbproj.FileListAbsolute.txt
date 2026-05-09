@@ -23,3 +23,5 @@ C:\Users\atruj\Desktop\FinalProject\DeadPower\DeadPowerGame\obj\Debug\DeadPowerG
 C:\Users\atruj\Desktop\FinalProject\DeadPower\DeadPowerGame\obj\Debug\DeadPowerGame.exe.config
 C:\Users\atruj\Desktop\FinalProject\DeadPower\DeadPowerGame\obj\Debug\DeadPowerGame_Content.g.vb
 C:\Users\atruj\Desktop\FinalProject\DeadPower\DeadPowerGame\bin\Debug\Data\save.json
+C:\Users\atruj\Desktop\FinalProject\DeadPower\DeadPowerGame\bin\Debug\Assets\images\PowerRoom.png
+C:\Users\atruj\Desktop\FinalProject\DeadPower\DeadPowerGame\bin\Debug\Assets\images\RadioRoom.png
