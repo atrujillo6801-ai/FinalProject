@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\mainwindow.xaml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\atruj\\desktop\\finalproject\\deadpower\\deadpowergame\\mainwindow.xaml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
       "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:mainwindow.xaml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\atruj\\desktop\\finalproject\\deadpower\\deadpowergame\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\atruj\\desktop\\finalproject\\deadpower\\deadpowergame\\models\\enemy.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:models\\enemy.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +26,20 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "Enemy.vb",
+              "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Enemy.vb",
+              "RelativeDocumentMoniker": "Models\\Enemy.vb",
+              "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\Models\\Enemy.vb",
+              "RelativeToolTip": "Models\\Enemy.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-05-09T00:30:19.515Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -34,13 +51,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml.vb",
               "DocumentMoniker": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\MainWindow.xaml.vb",
               "RelativeDocumentMoniker": "MainWindow.xaml.vb",
               "ToolTip": "C:\\Users\\atruj\\Desktop\\FinalProject\\DeadPower\\DeadPowerGame\\MainWindow.xaml.vb",
               "RelativeToolTip": "MainWindow.xaml.vb",
-              "ViewState": "AgIAALQBAAAAAAAAAAAMwL8BAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAMwGAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
               "WhenOpened": "2026-04-29T06:39:36.402Z",
               "EditorCaption": ""

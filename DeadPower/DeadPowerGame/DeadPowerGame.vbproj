@@ -149,6 +149,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\images\PowerRoom.png" />
+    <Resource Include="Assets\images\Radio room.png" />
+    <Resource Include="Assets\images\Key.png" />
+    <Resource Include="Assets\images\LightSwitchOn.png" />
     <Content Include="Assets\images\RoomLight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -12,15 +12,18 @@
         </Canvas.Background>
         <Label x:Name="lblPlayerName" Content="Player Name"
              Foreground="#C9A84C" FontSize="16" FontWeight="Bold" Margin="10"/>
-        <Label x:Name="lblHealth" Content="Health:" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Width="292" Canvas.Left="19" Canvas.Top="88" Background="#FFDB2C2C" />
         <ProgressBar x:Name="pbarPlayerHealth" Height="16"
                    Foreground="#AA3030" Canvas.Left="14" Width="218" Canvas.Top="56"/>
         <Label x:Name="lblPlayerHealth" Content="100 / 100"
-             Foreground="Black" FontSize="12" Background="#FFDED2D2" Canvas.Left="326" Canvas.Top="88"/>
+             Foreground="Black" FontSize="12" Background="{x:Null}" Canvas.Left="86" Canvas.Top="49" HorizontalAlignment="Left" Height="23" VerticalAlignment="Top"/>
         <Label Content="INVENTORY" Foreground="#C9A84C"
              FontSize="11" FontWeight="Bold" Canvas.Left="39" Canvas.Top="290"/>
-        <ListBox x:Name="lstInventory" Background="#1A1814"
-               Foreground="Black" Height="74" Canvas.Left="15" Canvas.Top="314" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120"/>
+        <ListBox x:Name="lstInventory"
+               Foreground="#FFF6F5F5" Height="74" Canvas.Left="15" Canvas.Top="314" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120">
+            <ListBox.Background>
+                <SolidColorBrush Color="#FF4A5308" Opacity="0.715"/>
+            </ListBox.Background>
+        </ListBox>
 
 
 
@@ -28,16 +31,22 @@
              Content="Entrance Hall" Foreground="#F0D080"
              FontSize="22" FontWeight="Bold" Canvas.Left="326" Canvas.Top="26"/>
 
-        <Label x:Name="lblEnemyStatus" Foreground="White" FontSize="13" Canvas.Left="670" Canvas.Top="75" HorizontalAlignment="Center" Height="36" VerticalAlignment="Top" Width="85" Background="#FFD5D1D1"/>
-
         <ProgressBar x:Name="pbarEnemyHealth" Height="14"
-                   Foreground="#8B0000" HorizontalAlignment="Left" Canvas.Left="554" VerticalAlignment="Top" Width="236" Canvas.Top="191"/>
+                   Foreground="#8B0000" HorizontalAlignment="Left" Canvas.Left="578" VerticalAlignment="Top" Width="236" Canvas.Top="58"/>
 
-
-        <Label x:Name="lblNpcName" Content="NPC Name" Canvas.Left="670" Canvas.Top="46" Background="#FFFDF6F6"/>
-        <TextBox x:Name="txtNpcDialogue" IsReadOnly="True" TextWrapping="Wrap" Text="NPC Dialogue" Width="120" Height="78" Canvas.Left="670" Canvas.Top="250" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-
-        <Button x:Name="btnLightSwitch" Content="Toggle Lights" Canvas.Left="704" Canvas.Top="358" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="btnLightSwitch" Canvas.Left="235" Canvas.Top="193" HorizontalAlignment="Left" VerticalAlignment="Top" Height="83" Width="88" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0.955"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.733"/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <Button.Background>
+                <ImageBrush ImageSource="/Assets/images/LightSwitchOn.png"/>
+            </Button.Background>
+        </Button>
 
         <TextBox x:Name="txtCombatLog" Grid.Row="3"
                IsReadOnly="True" TextWrapping="Wrap"

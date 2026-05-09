@@ -1,9 +1,9 @@
 {
   "Name": "Sam Stones",
-  "Health": 100,
+  "Health": 40,
   "MaxHealth": 100,
   "AttackPower": 15,
   "Gold": 0,
-  "CurrentRoom": "South Key Room",
+  "CurrentRoom": "North Zombie Room",
   "Inventory": []
 }

@@ -93,6 +93,7 @@ Class MainWindow
         northRoom.Description = "You find an unexpected guest."
         northRoom.Exits.Add("South", "East Dark Room")
         northRoom.Enemy = New Enemy("Zombie", 100, 10)
+        northRoom.Enemy.LootDrop = "Rusty Key"
 
 
 
@@ -262,11 +263,8 @@ Class MainWindow
         btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
         ' Show enemy/NPC/item status
         If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
-            lblNpcName.Content = currentRoom.Enemy.Name
-            lblEnemyStatus.Content = "Enemy present: " & currentRoom.Enemy.Name
             btnAttack.Visibility = Visibility.Visible
             imgEnemy.Visibility = Visibility.Visible
-            txtNpcDialogue.Text = "No Escape! RAHHHHH!"
             'placing player and enemy in combat 
             imgPlayer.HorizontalAlignment = HorizontalAlignment.Left
             imgPlayer.Margin = New Thickness(40, 0, 0, 40)
@@ -274,7 +272,6 @@ Class MainWindow
             imgEnemy.HorizontalAlignment = HorizontalAlignment.Right
             imgEnemy.Margin = New Thickness(0, 0, 40, 40)
         Else
-            lblEnemyStatus.Content = "Room is clear."
             'btnAttack.Visibility = Visibility.Collapsed
             imgEnemy.Visibility = Visibility.Collapsed
 
@@ -367,7 +364,6 @@ Class MainWindow
         If Not enemy.IsAlive() Then
             AddToLog(enemy.Name & " has been defeated!")
             HandleEnemyDefeat(enemy)
-            txtNpcDialogue.Text = "bleh"
             Return
         End If
 
