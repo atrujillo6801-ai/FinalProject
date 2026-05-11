@@ -75,7 +75,7 @@ Class MainWindow
         eastRoom.Description = "Looks like the power is down. Maybe there is a breaker or an auxilary generator somewhere."
         eastRoom.Exits.Add("West", "West Entrance Hall")
         eastRoom.Exits.Add("North", "North Zombie Room")
-        eastRoom.Enemy = New Enemy("Zombie", 100, 10)
+        eastRoom.Enemy = New Enemy("Zombie", 100, 2)
         eastRoom.Enemy.LootDrop = "Rusty Key"
 
 
@@ -85,8 +85,8 @@ Class MainWindow
         northRoom.Name = "North Zombie Room"
         northRoom.Description = "You find an unexpected guest."
         northRoom.Exits.Add("South", "East Dark Room")
-        northRoom.Enemy = New Enemy("Zombie", 100, 10)
-
+        northRoom.Enemy = New Enemy("Zombie", 100, 2)
+        northRoom.Enemy.LootDrop = "Radio"
 
 
 
@@ -305,6 +305,15 @@ Class MainWindow
         For Each item As String In player.Inventory
             lstInventory.Items.Add(item)
         Next
+
+    End Sub
+
+    Private Sub UpdateRadioVisibility()
+        If currentRoom.Name = "North Zombie Room" AndAlso currentRoom.Enemy IsNot Nothing AndAlso Not currentRoom.Enemy.IsAlive() Then
+            imgRadio.Visibility = Visibility.Visible
+        Else
+            imgRadio.Visibility = Visibility.Collapsed
+        End If
     End Sub
 
     Private Sub UpdateHealthBars()
@@ -531,14 +540,21 @@ Class MainWindow
         If enemy.LootDrop <> "" Then
             player.PickUpItem(enemy.LootDrop)
             AddToLog("You found: " & enemy.LootDrop)
-            UpdateInventoryDisplay() ' needed to be declared
+            UpdateInventoryDisplay()
+
+            If enemy.LootDrop = "Radio" Then
+                AddToLog("You found the emergency radio! This might be your way to call for rescue.")
+                MessageBox.Show("Objective Complete: You found the radio!")
+            End If
         End If
+
         btnAttack.Visibility = Visibility.Collapsed
 
         UpdateRoomDisplay()
         UpdateHealthBars()
         AddToLog("The room is now clear.")
     End Sub
+
 
     'Enemy Movement
 
