@@ -34,17 +34,16 @@
         <ProgressBar x:Name="pbarEnemyHealth" Height="14"
                    Foreground="#8B0000" HorizontalAlignment="Left" Canvas.Left="578" VerticalAlignment="Top" Width="236" Canvas.Top="58"/>
 
-        <Button x:Name="btnLightSwitch" Canvas.Left="235" Canvas.Top="193" HorizontalAlignment="Left" VerticalAlignment="Top" Height="83" Width="88" RenderTransformOrigin="0.5,0.5">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleX="0.955"/>
-                    <RotateTransform/>
-                    <TranslateTransform X="-0.733"/>
-                </TransformGroup>
-            </Button.RenderTransform>
+        <Button x:Name="btnLightSwitch"
+        Canvas.Left="235"
+        Canvas.Top="193"
+        Width="88"
+        Height="110"
+        Content=""
+        BorderThickness="0">
             <Button.Background>
-                <ImageBrush ImageSource="/Assets/images/LightSwitchOn.png"/>
+                <ImageBrush ImageSource="/Assets/images/LightSwitchOff.png"
+                    Stretch="Uniform"/>
             </Button.Background>
         </Button>
 

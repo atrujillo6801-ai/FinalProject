@@ -1,0 +1,218 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\application.xaml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:application.xaml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\mainwindow.xaml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:mainwindow.xaml.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\powerroom.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\powerroom.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\lightswitchon.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\lightswitchon.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\key.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\key.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\zombie.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\zombie.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\soldier.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\soldier.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\skinnyzombie.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\skinnyzombie.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\roomlight.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\roomlight.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\roomdark.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\roomdark.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|c:\\users\\jrosa\\onedrive\\creative cloud files\\desktop\\cs 120 final\\deadpower\\deadpowergame\\assets\\images\\radioroom.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{188C6C91-77A9-4059-8D9D-0861DF6CE3A0}|DeadPowerGame.vbproj|solutionrelative:assets\\images\\radioroom.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 12,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Application.xaml.vb",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Application.xaml.vb",
+              "RelativeDocumentMoniker": "Application.xaml.vb",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Application.xaml.vb",
+              "RelativeToolTip": "Application.xaml.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-05-11T02:31:22.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Key.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\Key.png",
+              "RelativeDocumentMoniker": "Assets\\images\\Key.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\Key.png",
+              "RelativeToolTip": "Assets\\images\\Key.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:43.473Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Zombie.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\Zombie.png",
+              "RelativeDocumentMoniker": "Assets\\images\\Zombie.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\Zombie.png",
+              "RelativeToolTip": "Assets\\images\\Zombie.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:41.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Soldier.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\Soldier.png",
+              "RelativeDocumentMoniker": "Assets\\images\\Soldier.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\Soldier.png",
+              "RelativeToolTip": "Assets\\images\\Soldier.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:40.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SkinnyZombie.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\SkinnyZombie.png",
+              "RelativeDocumentMoniker": "Assets\\images\\SkinnyZombie.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\SkinnyZombie.png",
+              "RelativeToolTip": "Assets\\images\\SkinnyZombie.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:39.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "RoomLight.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\RoomLight.png",
+              "RelativeDocumentMoniker": "Assets\\images\\RoomLight.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\RoomLight.png",
+              "RelativeToolTip": "Assets\\images\\RoomLight.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:38.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RoomDark.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\RoomDark.png",
+              "RelativeDocumentMoniker": "Assets\\images\\RoomDark.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\RoomDark.png",
+              "RelativeToolTip": "Assets\\images\\RoomDark.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:37.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RadioRoom.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\RadioRoom.png",
+              "RelativeDocumentMoniker": "Assets\\images\\RadioRoom.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\RadioRoom.png",
+              "RelativeToolTip": "Assets\\images\\RadioRoom.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:36.051Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LightSwitchOn.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\LightSwitchOn.png",
+              "RelativeDocumentMoniker": "Assets\\images\\LightSwitchOn.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\LightSwitchOn.png",
+              "RelativeToolTip": "Assets\\images\\LightSwitchOn.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:34.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PowerRoom.png",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\PowerRoom.png",
+              "RelativeDocumentMoniker": "Assets\\images\\PowerRoom.png",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\Assets\\images\\PowerRoom.png",
+              "RelativeToolTip": "Assets\\images\\PowerRoom.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-05-11T02:20:32.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml.vb",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\MainWindow.xaml.vb",
+              "RelativeDocumentMoniker": "MainWindow.xaml.vb",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\MainWindow.xaml.vb",
+              "RelativeToolTip": "MainWindow.xaml.vb",
+              "ViewState": "AgIAAOUAAAAAAAAAAAAqwCIBAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2026-05-11T00:31:41.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Users\\jrosa\\OneDrive\\Creative Cloud Files\\Desktop\\Cs 120 Final\\DeadPower\\DeadPowerGame\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-11T00:22:31.727Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

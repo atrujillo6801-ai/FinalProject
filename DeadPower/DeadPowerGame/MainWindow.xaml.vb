@@ -36,7 +36,7 @@ Class MainWindow
 
 
 
-    Dim basePath As String = System.IO.Directory.GetCurrentDirectory()
+    Dim basePath As String = AppDomain.CurrentDomain.BaseDirectory
     Dim relativePath As String = ""
     Dim fullPath As String = Path.Combine(basePath, relativePath)
 
@@ -114,6 +114,7 @@ Class MainWindow
         UpdateRoomDisplay()
         UpdateHealthBars()
         UpdateInventoryDisplay()
+        UpdatePowerSwitchImage()
         AddToLog("My plane was shot down. Maybe this building will provide the means to my escape.")
 
 
@@ -273,8 +274,11 @@ Class MainWindow
         btnSouth.Visibility = If(currentRoom.Exits.ContainsKey("South"), Visibility.Visible, Visibility.Collapsed)
         btnEast.Visibility = If(currentRoom.Exits.ContainsKey("East"), Visibility.Visible, Visibility.Collapsed)
         btnWest.Visibility = If(currentRoom.Exits.ContainsKey("West"), Visibility.Visible, Visibility.Collapsed)
-        btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
-        btnLightSwitch.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
+        If currentRoom.Name = "East Dark Room" Then
+            btnLightSwitch.Visibility = Visibility.Visible
+        Else
+            btnLightSwitch.Visibility = Visibility.Collapsed
+        End If
         ' Show enemy/NPC/item status
         If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
             btnAttack.Visibility = Visibility.Visible
@@ -409,8 +413,30 @@ Class MainWindow
         End If
 
         UpdateRoomDisplay()
+        UpdatePowerSwitchImage()
     End Sub
     'things that appear or disappear according to the rooms
+
+
+    Private Sub UpdatePowerSwitchImage()
+        Dim switchPath As String
+
+        If lightsOn Then
+            switchPath = Path.Combine(basePath, "Assets\images\LightSwitchOn.png")
+        Else
+            switchPath = Path.Combine(basePath, "Assets\images\LightSwitchOff.png")
+        End If
+
+        btnLightSwitch.Content = ""
+
+        Dim switchBrush As New ImageBrush()
+        switchBrush.ImageSource = New BitmapImage(New Uri(switchPath, UriKind.Absolute))
+        switchBrush.Stretch = Stretch.Uniform
+
+        btnLightSwitch.Background = switchBrush
+    End Sub
+
+
 
     Private Sub AddToLog(message As String)
         txtCombatLog.AppendText(vbCrLf & message)
