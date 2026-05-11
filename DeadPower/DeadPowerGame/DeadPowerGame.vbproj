@@ -158,6 +158,9 @@
     <Content Include="Assets\images\PowerRoom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\images\Radio.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\images\RadioRoom.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

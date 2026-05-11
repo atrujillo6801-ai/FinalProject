@@ -538,14 +538,18 @@ Class MainWindow
     'Enemy Defeat
     Private Sub HandleEnemyDefeat(enemy As Enemy)
         If enemy.LootDrop <> "" Then
-            player.PickUpItem(enemy.LootDrop)
-            AddToLog("You found: " & enemy.LootDrop)
-            UpdateInventoryDisplay()
 
-            If enemy.LootDrop = "Radio" Then
-                AddToLog("You found the emergency radio! This might be your way to call for rescue.")
-                MessageBox.Show("Objective Complete: You found the radio!")
+            If Not player.Inventory.Contains(enemy.LootDrop) Then
+                player.PickUpItem(enemy.LootDrop)
+                AddToLog("You found: " & enemy.LootDrop)
+                UpdateInventoryDisplay()
+
+                If enemy.LootDrop = "Radio" Then
+                    AddToLog("You found the emergency radio! This might be your way to call for rescue.")
+                    MessageBox.Show("Objective Complete: You found the radio!")
+                End If
             End If
+
         End If
 
         btnAttack.Visibility = Visibility.Collapsed
