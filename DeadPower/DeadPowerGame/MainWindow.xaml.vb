@@ -39,6 +39,9 @@ Class MainWindow
     ' -DrManzo (attackPressed flag) Makes the spacebar attack fire once per key press instead of every frame while the key is held.
     Private attackPressed As Boolean = False
 
+    ' -DrManzo (FIX 1 - noExitBounce flag) When the player hits a wall with no exit, we need to push them back so they are no longer touching the wall rect. Without this, collisionHandled stays True forever and no future collisions register.
+    Private noExitBounce As Boolean = False
+
     Dim basePath As String = System.IO.Directory.GetCurrentDirectory()
     Dim relativePath As String = ""
     Dim fullPath As String = Path.Combine(basePath, relativePath)
@@ -150,18 +153,42 @@ Class MainWindow
 
         If CollisionTestWalls(rectPlayer, rectNorth) Then
             collisionHandled = True
+            ' -DrManzo (FIX 1 - no exit bounce North) If there is no North exit, push the player back down by 10px so they leave the wall rect. This clears collisionHandled on the next frame and lets future collisions register normally.
+            If Not currentRoom.Exits.ContainsKey("North") Then
+                Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) + 10)
+                rectPlayer = imageToRect(imgPlayer)
+                collisionHandled = False
+            End If
             btnNorth_Click(Nothing, Nothing)
             AddToLog("You bumped into a wall to the north.")
         ElseIf CollisionTestWalls(rectPlayer, rectEast) Then
             collisionHandled = True
+            ' -DrManzo (FIX 1 - no exit bounce East) Same reason as North — push player left so they exit the wall rect and collisions can fire again.
+            If Not currentRoom.Exits.ContainsKey("East") Then
+                Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) - 10)
+                rectPlayer = imageToRect(imgPlayer)
+                collisionHandled = False
+            End If
             btnEast_Click(Nothing, Nothing)
             AddToLog("You bumped into a wall to the east.")
         ElseIf CollisionTestWalls(rectPlayer, rectSouth) Then
             collisionHandled = True
+            ' -DrManzo (FIX 1 - no exit bounce South) Push player up so they exit the wall rect when there is no South exit.
+            If Not currentRoom.Exits.ContainsKey("South") Then
+                Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) - 10)
+                rectPlayer = imageToRect(imgPlayer)
+                collisionHandled = False
+            End If
             btnSouth_Click(Nothing, Nothing)
             AddToLog("You bumped into a wall to the south.")
         ElseIf CollisionTestWalls(rectPlayer, rectWest) Then
             collisionHandled = True
+            ' -DrManzo (FIX 1 - no exit bounce West) Push player right so they exit the wall rect when there is no West exit.
+            If Not currentRoom.Exits.ContainsKey("West") Then
+                Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) + 10)
+                rectPlayer = imageToRect(imgPlayer)
+                collisionHandled = False
+            End If
             btnWest_Click(Nothing, Nothing)
             AddToLog("You bumped into a wall to the West.")
         Else
@@ -223,6 +250,9 @@ Class MainWindow
     'Updating functions defined here
     Private Sub UpdateRoomDisplay()
         lblRoomName.Content = currentRoom.Name
+
+        ' -DrManzo (IMPROVE 3 - show room description) currentRoom.Description was written for every room but never displayed. This shows it in lblRoomDescription so the player can read where they are.
+        lblRoomDescription.Content = currentRoom.Description
 
         If currentRoom.Name = "West Entrance Hall" Then
             relativePath = "Assets\\images\\RoomLight.png"
@@ -291,6 +321,9 @@ Class MainWindow
         If currentRoom.Enemy IsNot Nothing Then
             pbarEnemyHealth.Value = Math.Max(0, currentRoom.Enemy.Health)
             pbarEnemyHealth.Maximum = currentRoom.Enemy.MaxHealth
+        Else
+            ' -DrManzo (IMPROVE 2 - clear enemy health bar) When there is no enemy in the room, reset the bar to 0. Without this it holds the last enemy's value and shows a stale red bar in empty rooms.
+            pbarEnemyHealth.Value = 0
         End If
     End Sub
 
@@ -307,6 +340,8 @@ Class MainWindow
         Else
             AddToLog("There is no path to the north.")
         End If
+        ' -DrManzo (FIX 2 - return focus after button click) WPF gives keyboard focus to whichever button was last clicked. This causes spacebar to re-fire that button instead of going to Window_KeyDown. Returning focus to the window after every direction click fixes this.
+        Me.Focus()
     End Sub
 
     Private Sub btnSouth_Click(sender As Object, e As RoutedEventArgs) Handles btnSouth.Click
@@ -319,6 +354,8 @@ Class MainWindow
         Else
             AddToLog("There is no path to the south.")
         End If
+        ' -DrManzo (FIX 2 - return focus after button click) Same reason as btnNorth — take focus back so spacebar routes to the window, not this button.
+        Me.Focus()
     End Sub
 
     Private Sub btnEast_Click(sender As Object, e As RoutedEventArgs) Handles btnEast.Click
@@ -330,6 +367,8 @@ Class MainWindow
         Else
             AddToLog("There is no path to the east.")
         End If
+        ' -DrManzo (FIX 2 - return focus after button click) Same reason as btnNorth.
+        Me.Focus()
     End Sub
 
     Private Sub btnWest_Click(sender As Object, e As RoutedEventArgs) Handles btnWest.Click
@@ -341,6 +380,8 @@ Class MainWindow
         Else
             AddToLog("There is no path to the west.")
         End If
+        ' -DrManzo (FIX 2 - return focus after button click) Same reason as btnNorth.
+        Me.Focus()
     End Sub
 
     Private Sub btnAttack_Click(sender As Object, e As RoutedEventArgs) Handles btnAttack.Click
@@ -366,10 +407,14 @@ Class MainWindow
                 ShowGameOver()
             End If
         End If
+        ' -DrManzo (FIX 2 - return focus after button click) Same reason as direction buttons — prevents spacebar from re-triggering btnAttack on the next press instead of routing through Window_KeyDown.
+        Me.Focus()
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As RoutedEventArgs) Handles btnSave.Click
         SaveGame()
+        ' -DrManzo (FIX 2 - return focus after button click) Prevents spacebar from triggering Save repeatedly after the button is clicked.
+        Me.Focus()
     End Sub
 
     Private Sub btnLightSwitch_Click(sender As Object, e As RoutedEventArgs) Handles btnLightSwitch.Click
@@ -383,6 +428,8 @@ Class MainWindow
         End If
 
         UpdateRoomDisplay()
+        ' -DrManzo (FIX 2 - return focus after button click) This is the exact button your lead described — clicking the light switch then pressing space was toggling the switch again instead of attacking. Me.Focus() returns control to the window keyboard handler.
+        Me.Focus()
     End Sub
 
     Private Sub AddToLog(message As String)
@@ -431,26 +478,30 @@ Class MainWindow
     End Sub
 
     Private Sub MoveLeft()
-        ' -DrManzo (Canvas movement) Use Canvas.SetLeft instead of Margin so the visual position and collision rectangle stay in sync. imageToRect reads Canvas.GetLeft, so movement must write to the same property.
-        Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) - 2)
+        ' -DrManzo (IMPROVE 1 - canvas boundary clamp) Stops player from walking off the left edge of the canvas entirely.
+        Dim newX As Double = Math.Max(0, Canvas.GetLeft(imgPlayer) - 2)
+        Canvas.SetLeft(imgPlayer, newX)
         rectPlayer = imageToRect(imgPlayer)
     End Sub
 
     Private Sub MoveRight()
-        ' -DrManzo (Canvas movement) Same reason as MoveLeft — keeps Canvas coordinates and collision rect in sync.
-        Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) + 2)
+        ' -DrManzo (IMPROVE 1 - canvas boundary clamp) Stops player from walking off the right edge. Subtracts the player sprite width so the whole image stays on screen.
+        Dim newX As Double = Math.Min(mainCanvas.ActualWidth - imgPlayer.Width, Canvas.GetLeft(imgPlayer) + 2)
+        Canvas.SetLeft(imgPlayer, newX)
         rectPlayer = imageToRect(imgPlayer)
     End Sub
 
     Private Sub MoveUp()
-        ' -DrManzo (Canvas movement) Use Canvas.SetTop so vertical movement stays on the same coordinate system as the collision rectangles.
-        Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) - 2)
+        ' -DrManzo (IMPROVE 1 - canvas boundary clamp) Stops player from walking off the top edge.
+        Dim newY As Double = Math.Max(0, Canvas.GetTop(imgPlayer) - 2)
+        Canvas.SetTop(imgPlayer, newY)
         rectPlayer = imageToRect(imgPlayer)
     End Sub
 
     Private Sub MoveDown()
-        ' -DrManzo (Canvas movement) Same reason as MoveUp — keeps Canvas coordinates and collision rect in sync.
-        Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) + 2)
+        ' -DrManzo (IMPROVE 1 - canvas boundary clamp) Stops player from walking off the bottom edge. Subtracts sprite height so the full image stays visible.
+        Dim newY As Double = Math.Min(mainCanvas.ActualHeight - imgPlayer.Height, Canvas.GetTop(imgPlayer) + 2)
+        Canvas.SetTop(imgPlayer, newY)
         rectPlayer = imageToRect(imgPlayer)
     End Sub
 

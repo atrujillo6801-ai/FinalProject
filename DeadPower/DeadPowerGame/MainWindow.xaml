@@ -25,11 +25,26 @@
             </ListBox.Background>
         </ListBox>
 
-
-
         <Label x:Name="lblRoomName" Grid.Row="0"
              Content="Entrance Hall" Foreground="#F0D080"
              FontSize="22" FontWeight="Bold" Canvas.Left="326" Canvas.Top="26"/>
+
+        <!-- -DrManzo (IMPROVE 3 - room description label) Added to display currentRoom.Description which was written for every room but never shown on screen. Positioned below lblRoomName, width capped so it does not overlap the enemy health bar. -->
+        <Label x:Name="lblRoomDescription" Content=""
+             Foreground="#C9A84C" FontSize="11"
+             Canvas.Left="280" Canvas.Top="60"
+             Width="240" Height="68"
+             VerticalContentAlignment="Top" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Label.Template>
+                <ControlTemplate TargetType="Label">
+                    <TextBlock Text="{TemplateBinding Content}"
+                               Foreground="{TemplateBinding Foreground}"
+                               FontSize="{TemplateBinding FontSize}"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Top"/>
+                </ControlTemplate>
+            </Label.Template>
+        </Label>
 
         <ProgressBar x:Name="pbarEnemyHealth" Height="14"
                    Foreground="#8B0000" HorizontalAlignment="Left" Canvas.Left="578" VerticalAlignment="Top" Width="236" Canvas.Top="58"/>
@@ -55,7 +70,6 @@
                FontFamily="Consolas" FontSize="12" Canvas.Left="166" Canvas.Top="406" HorizontalAlignment="Center" VerticalAlignment="Top" Width="512" Height="52"/>
         <Image x:Name="imgPlayer" Height="100" Canvas.Left="180" Canvas.Top="250" Width="100" Source="/Assets/images/Soldier.png"/>
         <Image x:Name="imgEnemy" Height="100" Canvas.Left="528" Canvas.Top="273" Width="100" Source="/Assets/images/Zombie.png"/>
-
 
         <Button x:Name="btnNorth" Content="▲ North" Width="120" Click="btnNorth_Click" HorizontalAlignment="Left" Canvas.Left="340" Canvas.Top="11" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFEEECEC" BorderBrush="{x:Null}" FontFamily="Stencil"/>
         <Button x:Name="btnSouth" Content="▼ South" Width="131" Click="btnSouth_Click" HorizontalAlignment="Left" Canvas.Left="356" Canvas.Top="331" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFF0EAEA" BorderBrush="{x:Null}" FontFamily="Stencil"/>
