@@ -26,7 +26,11 @@ Class MainWindow
     Dim downKey As Boolean
     Dim spaceKey As Boolean
     Dim speed As Integer
-
+    Dim zombieSpeed As Double = 0.8
+    Dim zombieTouchDamage As Integer = 2
+    Dim zombieCanDamage As Boolean = True
+    Dim zombieDamageCooldown As Integer = 0
+    Dim zombieDamageCooldownMax As Integer = 60
     Private rectPlayer As Rect
     Private rectNorth As Rect
     Private rectSouth As Rect
@@ -133,23 +137,36 @@ Class MainWindow
 
     End Sub
     Private Function imageToRect(sprite As Image) As Rect
-        Return New Rect(Canvas.GetLeft(sprite), Canvas.GetTop(sprite), sprite.Width, sprite.Height)
+        Dim x As Double = Canvas.GetLeft(sprite)
+        Dim y As Double = Canvas.GetTop(sprite)
+
+        If Double.IsNaN(x) Then x = 0
+        If Double.IsNaN(y) Then y = 0
+
+        Return New Rect(x, y, sprite.Width, sprite.Height)
     End Function
     Private Sub GameLoop()
         Me.Focus() ' Ensure the window has focus to receive keyboard input
+
+        ' Player movement
         If leftKey Then CheckKeyToMove(MoveKey.A)
         If rightKey Then CheckKeyToMove(MoveKey.D)
         If upKey Then CheckKeyToMove(MoveKey.W)
         If downKey Then CheckKeyToMove(MoveKey.S)
-        If spaceKey Then CheckKeyToMove(MoveKey.Space)
 
+        ' Space key attack - only fires once per key press
+        If spaceKey Then
+            CheckKeyToMove(MoveKey.Space)
+            spaceKey = False
+        End If
+
+        ' Zombie behavior
+        MoveZombieTowardPlayer()
+        CheckZombiePlayerCollision()
+        UpdateZombieDamageCooldown()
+
+        ' Room exit collision
         CheckCollision()
-        CollisionTestWalls(rectPlayer, rectNorth)
-        CollisionTestWalls(rectPlayer, rectEast)
-        CollisionTestWalls(rectPlayer, rectSouth)
-        CollisionTestWalls(rectPlayer, rectWest)
-
-
     End Sub
 
     Private Sub CheckKeyToMove(isKeyMove As MoveKey)
@@ -279,24 +296,15 @@ Class MainWindow
         Else
             btnLightSwitch.Visibility = Visibility.Collapsed
         End If
-        ' Show enemy/NPC/item status
+
+        'Placing player in combat
+
         If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
             btnAttack.Visibility = Visibility.Visible
             imgEnemy.Visibility = Visibility.Visible
-            'placing player and enemy in combat 
-            imgPlayer.HorizontalAlignment = HorizontalAlignment.Left
-            imgPlayer.Margin = New Thickness(40, 0, 0, 40)
-
-            imgEnemy.HorizontalAlignment = HorizontalAlignment.Right
-            imgEnemy.Margin = New Thickness(0, 0, 40, 40)
         Else
             btnAttack.Visibility = Visibility.Collapsed
             imgEnemy.Visibility = Visibility.Collapsed
-
-            imgPlayer.HorizontalAlignment = HorizontalAlignment.Center
-            imgPlayer.Margin = New Thickness(0, 0, 0, 40)
-
-
         End If
     End Sub
 
@@ -382,6 +390,7 @@ Class MainWindow
 
     Private Sub btnAttack_Click(sender As Object, e As RoutedEventArgs) Handles btnAttack.Click
         Dim enemy As Enemy = currentRoom.Enemy
+
         If enemy IsNot Nothing Then
             ' Player attacks first
             Dim playerDamage As Integer = player.Attack(enemy)
@@ -393,17 +402,10 @@ Class MainWindow
                 HandleEnemyDefeat(enemy)
                 Return
             End If
-
-            ' Enemy counter-attacks
-            Dim enemyDamage As Integer = enemy.AttackPlayer(player)
-            AddToLog(enemy.Name & " strikes back for " & enemyDamage & " damage!")
-            UpdateHealthBars()
-
-            If Not player.IsAlive() Then
-                AddToLog("You have been defeated... Game Over.")
-                ShowGameOver() ' needed to be declared
-            End If
         End If
+        ' Enemy retaliates if still alive
+
+
     End Sub
 
 
@@ -505,23 +507,23 @@ Class MainWindow
     End Sub
 
     Private Sub MoveLeft()
-        rectPlayer.X -= 2
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left - 2, imgPlayer.Margin.Top, 0, 0)
+        Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) - 2)
+        rectPlayer = imageToRect(imgPlayer)
     End Sub
 
     Private Sub MoveRight()
-        rectPlayer.X += 2
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left + 2, imgPlayer.Margin.Top, 0, 0)
+        Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) + 2)
+        rectPlayer = imageToRect(imgPlayer)
     End Sub
 
     Private Sub MoveUp()
-        rectPlayer.Y -= 2
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top - 2, 0, 0)
+        Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) - 2)
+        rectPlayer = imageToRect(imgPlayer)
     End Sub
 
     Private Sub MoveDown()
-        rectPlayer.Y += 2
-        imgPlayer.Margin = New Thickness(imgPlayer.Margin.Left, imgPlayer.Margin.Top + 2, 0, 0)
+        Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) + 2)
+        rectPlayer = imageToRect(imgPlayer)
     End Sub
 
 
@@ -545,15 +547,15 @@ Class MainWindow
                 UpdateInventoryDisplay()
 
                 If enemy.LootDrop = "Radio" Then
-                    AddToLog("You found the emergency radio! This might be your way to call for rescue.")
-                    MessageBox.Show("Objective Complete: You found the radio!")
+                    AddToLog("OBJECTIVE COMPLETE: You found the emergency radio!")
+                    AddToLog("Static crackles through the speaker. You may finally have a way to call for rescue.")
+                    AddToLog("Find a safe place to broadcast your signal.")
                 End If
             End If
 
         End If
 
         btnAttack.Visibility = Visibility.Collapsed
-
         UpdateRoomDisplay()
         UpdateHealthBars()
         AddToLog("The room is now clear.")
@@ -562,8 +564,71 @@ Class MainWindow
 
     'Enemy Movement
 
-    'Enemy Collision
+    Private Sub MoveZombieTowardPlayer()
+        If currentRoom.Enemy Is Nothing Then Return
+        If Not currentRoom.Enemy.IsAlive() Then Return
+        If imgEnemy.Visibility <> Visibility.Visible Then Return
 
+        Dim zombieX As Double = Canvas.GetLeft(imgEnemy)
+        Dim zombieY As Double = Canvas.GetTop(imgEnemy)
+
+        Dim playerX As Double = Canvas.GetLeft(imgPlayer)
+        Dim playerY As Double = Canvas.GetTop(imgPlayer)
+
+        If Double.IsNaN(zombieX) Then zombieX = 0
+        If Double.IsNaN(zombieY) Then zombieY = 0
+        If Double.IsNaN(playerX) Then playerX = 0
+        If Double.IsNaN(playerY) Then playerY = 0
+
+        If zombieX < playerX Then
+            Canvas.SetLeft(imgEnemy, zombieX + zombieSpeed)
+        ElseIf zombieX > playerX Then
+            Canvas.SetLeft(imgEnemy, zombieX - zombieSpeed)
+        End If
+
+        If zombieY < playerY Then
+            Canvas.SetTop(imgEnemy, zombieY + zombieSpeed)
+        ElseIf zombieY > playerY Then
+            Canvas.SetTop(imgEnemy, zombieY - zombieSpeed)
+        End If
+    End Sub
+
+    'Enemy Collision
+    Private Sub CheckZombiePlayerCollision()
+        If currentRoom.Enemy Is Nothing Then Return
+        If Not currentRoom.Enemy.IsAlive() Then Return
+        If imgEnemy.Visibility <> Visibility.Visible Then Return
+
+        Dim playerRect As Rect = imageToRect(imgPlayer)
+        Dim zombieRect As Rect = imageToRect(imgEnemy)
+
+        If playerRect.IntersectsWith(zombieRect) Then
+            If zombieCanDamage Then
+                player.Health -= zombieTouchDamage
+
+                AddToLog("The zombie claws Sam Stones for " & zombieTouchDamage & " damage!")
+                UpdateHealthBars()
+
+                zombieCanDamage = False
+                zombieDamageCooldown = zombieDamageCooldownMax
+
+                If Not player.IsAlive() Then
+                    AddToLog("Sam Stones has been overwhelmed by the zombie...")
+                    ShowGameOver()
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub UpdateZombieDamageCooldown()
+        If zombieCanDamage = False Then
+            zombieDamageCooldown -= 1
+
+            If zombieDamageCooldown <= 0 Then
+                zombieCanDamage = True
+            End If
+        End If
+    End Sub
 
 
 End Class

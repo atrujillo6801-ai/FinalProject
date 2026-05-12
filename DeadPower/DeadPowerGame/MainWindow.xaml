@@ -51,7 +51,7 @@
                IsReadOnly="True" TextWrapping="Wrap"
                VerticalScrollBarVisibility="Auto"
                Background="#0E0C0A" Foreground="#C9E0A0"
-               FontFamily="Consolas" FontSize="12" Canvas.Left="144" Canvas.Top="364" HorizontalAlignment="Left" VerticalAlignment="Top" Width="512" Height="40"/>
+               FontFamily="Consolas" FontSize="12" Canvas.Left="144" Canvas.Top="364" HorizontalAlignment="Center" VerticalAlignment="Top" Width="512" Height="59"/>
         <Image x:Name="imgPlayer" Height="100" Canvas.Left="180" Canvas.Top="250" Width="100" Source="/Assets/images/Soldier.png"/>
         <Image x:Name="imgEnemy" Height="100" Canvas.Left="528" Canvas.Top="273" Width="100" Source="/Assets/images/Zombie.png"/>
         <Image x:Name="imgRadio" Height="70" Width="70" Canvas.Left="420" Canvas.Top="250" Source="/Assets/images/Radio.png" Visibility="Collapsed"/>
