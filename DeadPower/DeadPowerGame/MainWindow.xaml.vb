@@ -1,15 +1,48 @@
-﻿Imports System.IO
+﻿Imports Microsoft.VisualBasic
+Imports System.IO
 Imports Newtonsoft.Json
 
 
 
 Class MainWindow
-
-
-
     '--------------------------------------------------------------------------------------------------------------
     'Declarations for Variables that are used across the entire code 
     '--------------------------------------------------------------------------------------------------------------
+    Enum MoveKey
+        A = 0
+        D = 1
+        W = 2
+        S = 3
+        Space = 4
+    End Enum
+
+    Dim currentRoom As Room
+    Dim gameRooms As Dictionary(Of String, Room)
+    Dim player As Player
+    Dim lightsOn As Boolean = False
+    Dim leftKey As Boolean
+    Dim rightKey As Boolean
+    Dim upKey As Boolean
+    Dim downKey As Boolean
+    Dim spaceKey As Boolean
+    Dim speed As Integer
+    Dim zombieSpeed As Double = 0.8
+    Dim zombieTouchDamage As Integer = 2
+    Dim zombieCanDamage As Boolean = True
+    Dim zombieDamageCooldown As Integer = 0
+    Dim zombieDamageCooldownMax As Integer = 60
+    Private rectPlayer As Rect
+    Private rectNorth As Rect
+    Private rectSouth As Rect
+    Private rectWest As Rect
+    Private rectEast As Rect
+
+
+
+
+    Dim basePath As String = AppDomain.CurrentDomain.BaseDirectory
+    Dim relativePath As String = ""
+    Dim fullPath As String = Path.Combine(basePath, relativePath)
 
 
 
@@ -22,43 +55,404 @@ Class MainWindow
     '--------------------------------------------------------------------------------------------------------------
     'Main Game Logic
     '--------------------------------------------------------------------------------------------------------------
-
     Public Sub New()
         InitializeComponent()
 
-        'All the objects that should be created at the start of the game should be created here. This includes the player, the rooms, and any other objects that are necessary for the game to function.
+        ' Create dictionary of rooms
+        gameRooms = New Dictionary(Of String, Room)
+
+
+        ' Create player
+        player = New Player("Sam Stones")
+        lblPlayerName.Content = player.Name
+
+        'we are declaring that a room will be created from the blueprint class of room, and we will call it "entrance". 
+        'We will then set the properties of this room (name, description, etc.from the blueprint properties) to create a unique location in our game world.]
+        Dim entrance As New Room()
+        entrance.Name = "West Entrance Hall"
+        entrance.Description = "Looks like a deserted building. I wonder if I can find a radio inside? (Use your keyboard keys to explore rooms)."
+        entrance.Exits.Add("East", "East Dark Room")
+
+
+        Dim eastRoom As New Room()
+        eastRoom.Name = "East Dark Room"
+        eastRoom.Description = "Looks like the power is down. Maybe there is a breaker or an auxilary generator somewhere."
+        eastRoom.Exits.Add("West", "West Entrance Hall")
+        eastRoom.Exits.Add("North", "North Zombie Room")
+        eastRoom.Enemy = New Enemy("Zombie", 100, 2)
+        eastRoom.Enemy.LootDrop = "Rusty Key"
 
 
 
-        'Any functions that update the UI from the start of the game should be called here as well. This includes functions that update the player's stats, the current room's description, and any other UI elements that need to be updated at the start of the game.
+
+        Dim northRoom As New Room()
+        northRoom.Name = "North Zombie Room"
+        northRoom.Description = "You find an unexpected guest."
+        northRoom.Exits.Add("South", "East Dark Room")
+        northRoom.Enemy = New Enemy("Zombie", 100, 2)
+        northRoom.Enemy.LootDrop = "Radio"
+
+
+
+
+
+
+        'this adds the rooms we created to the dictionary of rooms, using the string of the room's name as the key. This allows us to easily look up any room by its name later on (like when we want to move to a new room).
+        gameRooms.Add(entrance.Name, entrance)
+        gameRooms.Add(northRoom.Name, northRoom)
+        gameRooms.Add(eastRoom.Name, eastRoom)
+
+
+
+
+        ' Set starting room
+        currentRoom = entrance
+
+        rectPlayer = imageToRect(imgPlayer)
+        rectNorth = imageToRect(imgNorth)
+        rectEast = imageToRect(imgEast)
+        rectSouth = imageToRect(imgSouth)
+        rectWest = imageToRect(imgWest)
+
+        ' Update the screen
+        UpdateRoomDisplay()
+        UpdateHealthBars()
+        UpdateInventoryDisplay()
+        UpdatePowerSwitchImage()
+        AddToLog("My plane was shot down. Maybe this building will provide the means to my escape.")
+
+
+        Me.Focus() ' Set focus to the window to ensure it receives keyboard input
+
+        AddHandler CompositionTarget.Rendering, AddressOf GameLoop
+
+        Dim leftOffset As Double = 10 ' left margin inside room area (matches imgRoom Margin)
+        Dim topOffset As Double = 10
+        Dim roomWidth As Double = mainCanvas.ActualWidth
+        Dim roomHeight As Double = mainCanvas.ActualHeight
+        If roomWidth = 0 Then roomWidth = 400 ' fallback
+        If roomHeight = 0 Then roomHeight = 300
+
+
 
     End Sub
+    Private Function imageToRect(sprite As Image) As Rect
+        Dim x As Double = Canvas.GetLeft(sprite)
+        Dim y As Double = Canvas.GetTop(sprite)
 
+        If Double.IsNaN(x) Then x = 0
+        If Double.IsNaN(y) Then y = 0
 
-
+        Return New Rect(x, y, sprite.Width, sprite.Height)
+    End Function
     Private Sub GameLoop()
+        Me.Focus() ' Ensure the window has focus to receive keyboard input
 
+        ' Player movement
+        If leftKey Then CheckKeyToMove(MoveKey.A)
+        If rightKey Then CheckKeyToMove(MoveKey.D)
+        If upKey Then CheckKeyToMove(MoveKey.W)
+        If downKey Then CheckKeyToMove(MoveKey.S)
+
+        ' Space key attack - only fires once per key press
+        If spaceKey Then
+            CheckKeyToMove(MoveKey.Space)
+            spaceKey = False
+        End If
+
+        ' Zombie behavior
+        MoveZombieTowardPlayer()
+        CheckZombiePlayerCollision()
+        UpdateZombieDamageCooldown()
+
+        ' Room exit collision
+        CheckCollision()
     End Sub
+
+    Private Sub CheckKeyToMove(isKeyMove As MoveKey)
+        Select Case isKeyMove
+            Case isKeyMove.A
+                MoveLeft()
+            Case isKeyMove.D
+                MoveRight()
+            Case isKeyMove.W
+                MoveUp()
+            Case isKeyMove.S
+                MoveDown()
+            Case isKeyMove.Space
+                btnAttack_Click(Nothing, Nothing) ' Simulate attack button click when space is pressed
+            Case Else
+
+
+        End Select
+    End Sub
+
+
+
+
 
     'Room Logic
+    Private Function CollisionTestWalls(objA As Rect, wallObj As Rect) As Boolean
+        Return objA.IntersectsWith(wallObj)
+    End Function
+
+    Sub CheckCollision()
+        If CollisionTestWalls(rectPlayer, rectNorth) Then
+            btnNorth_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the north.")
+        ElseIf CollisionTestWalls(rectPlayer, rectEast) Then
+            btnEast_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the east.")
+        ElseIf CollisionTestWalls(rectPlayer, rectSouth) Then
+            btnSouth_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the south.")
+        ElseIf CollisionTestWalls(rectPlayer, rectWest) Then
+            btnWest_Click(Nothing, Nothing)
+            AddToLog("You bumped into a wall to the West")
+        End If
+    End Sub
 
     'Loading a game
+    Private Sub LoadGame()
+        Dim savePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\save.json")
+
+        If Not File.Exists(savePath) Then
+            AddToLog("No save file found. Starting new game.")
+            Return
+        End If
+
+        Dim json As String = File.ReadAllText(savePath)
+        Dim saveData As SaveData = JsonConvert.DeserializeObject(Of SaveData)(json)
+
+        ' Restore the player from saved data
+        player = New Player(saveData.Name)
+        player.Health = saveData.Health
+        player.MaxHealth = saveData.MaxHealth
+        player.AttackPower = saveData.AttackPower
+        player.Gold = saveData.Gold
+        player.Inventory = saveData.Inventory
+
+        ' Restore the room
+        currentRoom = gameRooms(saveData.CurrentRoom)
+
+        UpdateRoomDisplay()
+        UpdateHealthBars()
+        UpdateInventoryDisplay()
+        AddToLog("Save loaded. Welcome back, " & player.Name & "!")
+    End Sub
 
     'Saving a game
+    Private Sub SaveGame()
+        Dim saveData As New SaveData ' a simple data-transfer class (see below)
+        saveData.Name = player.Name
+        saveData.Health = player.Health
+        saveData.MaxHealth = player.MaxHealth
+        saveData.AttackPower = player.AttackPower
+        saveData.Gold = player.Gold
+        saveData.CurrentRoom = currentRoom.Name
+        saveData.Inventory = player.Inventory
+
+        Dim json As String = JsonConvert.SerializeObject(saveData, Formatting.Indented)
+        Dim savePath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\save.json")
+        File.WriteAllText(savePath, json)
+        AddToLog("Game saved successfully.")
+    End Sub
 
     'GameOver
+    Sub ShowGameOver() ' Had to declare from scratch. Used suggestion from VS
+        MessageBox.Show("Game Over! Thanks for playing.")
+        Application.Current.Shutdown()
+    End Sub
 
     'updating functions defined here
+    Private Sub UpdateRoomDisplay()
+        lblRoomName.Content = currentRoom.Name
+
+
+        ' Change background based on lights
+        If currentRoom.Name = "West Entrance Hall" Then
+            relativePath = "Assets\images\RoomLight.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        ElseIf currentRoom.Name = "North Zombie Room" And lightsOn Then
+            relativePath = "Assets\images\RadioRoom.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        ElseIf currentRoom.Name = "East Dark Room" And lightsOn Then
+            relativePath = "Assets\images\PowerRoom.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        Else
+            relativePath = "Assets\images\RoomDark.png"
+            mainCanvas.Background = New ImageBrush(New BitmapImage(New Uri(basePath + "/" + relativePath)))
+        End If
 
 
 
+        ' Show/hide direction buttons based on available exits
+        btnNorth.Visibility = If(currentRoom.Exits.ContainsKey("North"), Visibility.Visible, Visibility.Collapsed)
+        btnSouth.Visibility = If(currentRoom.Exits.ContainsKey("South"), Visibility.Visible, Visibility.Collapsed)
+        btnEast.Visibility = If(currentRoom.Exits.ContainsKey("East"), Visibility.Visible, Visibility.Collapsed)
+        btnWest.Visibility = If(currentRoom.Exits.ContainsKey("West"), Visibility.Visible, Visibility.Collapsed)
+        If currentRoom.Name = "East Dark Room" Then
+            btnLightSwitch.Visibility = Visibility.Visible
+        Else
+            btnLightSwitch.Visibility = Visibility.Collapsed
+        End If
+
+        'Placing player in combat
+
+        If currentRoom.Enemy IsNot Nothing AndAlso currentRoom.Enemy.IsAlive() Then
+            btnAttack.Visibility = Visibility.Visible
+            imgEnemy.Visibility = Visibility.Visible
+        Else
+            btnAttack.Visibility = Visibility.Collapsed
+            imgEnemy.Visibility = Visibility.Collapsed
+        End If
+    End Sub
+
+    Sub UpdateInventoryDisplay() ' Had to declare this as a subroutine so I can call it from other places (like when player picks up loot)
+        lstInventory.Items.Clear()
+        For Each item As String In player.Inventory
+            lstInventory.Items.Add(item)
+        Next
+
+    End Sub
+
+    Private Sub UpdateRadioVisibility()
+        If currentRoom.Name = "North Zombie Room" AndAlso currentRoom.Enemy IsNot Nothing AndAlso Not currentRoom.Enemy.IsAlive() Then
+            imgRadio.Visibility = Visibility.Visible
+        Else
+            imgRadio.Visibility = Visibility.Collapsed
+        End If
+    End Sub
+
+    Private Sub UpdateHealthBars()
+        ' Player health bar (a WPF ProgressBar named pbarPlayerHealth)
+        pbarPlayerHealth.Value = player.Health
+        pbarPlayerHealth.Maximum = player.MaxHealth
+        lblPlayerHealth.Content = player.Health & " / " & player.MaxHealth
+
+        ' Enemy health bar
+        If currentRoom.Enemy IsNot Nothing Then
+            pbarEnemyHealth.Value = Math.Max(0, currentRoom.Enemy.Health)
+            pbarEnemyHealth.Maximum = currentRoom.Enemy.MaxHealth
+        End If
+    End Sub
 
     '--------------------------------------------------------------------------------------------------------------
     'Interactive UI Logic
     '--------------------------------------------------------------------------------------------------------------
 
     'Buttons
+    Private Sub btnNorth_Click(sender As Object, e As RoutedEventArgs) Handles btnNorth.Click
+        ' Check if the current room has a "North" exit; notice it has to specifically contain it as a string!
+        If currentRoom.Exits.ContainsKey("North") Then
+            Dim nextRoomName As String = currentRoom.Exits("North")
+            currentRoom = gameRooms(nextRoomName)  ' gameRooms is a Dictionary of all rooms, so HOW DO I DECLARE A DICTIONARY?
+            UpdateRoomDisplay()
+            AddToLog("You moved north into " & currentRoom.Name & ".")
+        Else
+            AddToLog("There is no path to the north.")
+        End If
+    End Sub
+
+    Private Sub btnSouth_Click(sender As Object, e As RoutedEventArgs) Handles btnSouth.Click
+        If currentRoom.Exits.ContainsKey("South") Then
+            Dim nextRoomName As String = currentRoom.Exits("South")
+            currentRoom = gameRooms(nextRoomName)
+            UpdateRoomDisplay()
+            AddToLog("You moved south into " & currentRoom.Name & ".")
+            AddToLog("Oh no, the doors have locked! I must find a key.")
+        Else
+            AddToLog("There is no path to the south.")
+        End If
+    End Sub
+
+    Private Sub btnEast_Click(sender As Object, e As RoutedEventArgs) Handles btnEast.Click
+        If currentRoom.Exits.ContainsKey("East") Then
+            Dim nextRoomName As String = currentRoom.Exits("East")
+            currentRoom = gameRooms(nextRoomName)
+            UpdateRoomDisplay()
+            AddToLog("You moved east into " & currentRoom.Name & ".")
+        Else
+            AddToLog("There is no path to the east.")
+        End If
+    End Sub
+
+    Private Sub btnWest_Click(sender As Object, e As RoutedEventArgs) Handles btnWest.Click
+        If currentRoom.Exits.ContainsKey("West") Then
+            Dim nextRoomName As String = currentRoom.Exits("West")
+            currentRoom = gameRooms(nextRoomName)
+            UpdateRoomDisplay()
+            AddToLog("You moved west into " & currentRoom.Name & ".")
+        Else
+            AddToLog("There is no path to the west.")
+        End If
+    End Sub
+
+    Private Sub btnAttack_Click(sender As Object, e As RoutedEventArgs) Handles btnAttack.Click
+        Dim enemy As Enemy = currentRoom.Enemy
+
+        If enemy IsNot Nothing Then
+            ' Player attacks first
+            Dim playerDamage As Integer = player.Attack(enemy)
+            AddToLog("You deal " & playerDamage & " damage to " & enemy.Name & "!")
+            UpdateHealthBars()
+
+            If Not enemy.IsAlive() Then
+                AddToLog(enemy.Name & " has been defeated!")
+                HandleEnemyDefeat(enemy)
+                Return
+            End If
+        End If
+        ' Enemy retaliates if still alive
+
+
+    End Sub
+
+
+    Private Sub btnSave_Click(sender As Object, e As RoutedEventArgs) Handles btnSave.Click
+        SaveGame()
+    End Sub
+
+    Private Sub btnLightSwitch_Click(sender As Object, e As RoutedEventArgs) Handles btnLightSwitch.Click
+        lightsOn = Not lightsOn
+
+        If lightsOn Then
+            AddToLog("Lights turned ON . . . What is this place?")
+            AddToLog("The faster I find a radio, the faster I can leave this hell hole.")
+        Else
+            AddToLog("Lights turned OFF")
+        End If
+
+        UpdateRoomDisplay()
+        UpdatePowerSwitchImage()
+    End Sub
     'things that appear or disappear according to the rooms
+
+
+    Private Sub UpdatePowerSwitchImage()
+        Dim switchPath As String
+
+        If lightsOn Then
+            switchPath = Path.Combine(basePath, "Assets\images\LightSwitchOn.png")
+        Else
+            switchPath = Path.Combine(basePath, "Assets\images\LightSwitchOff.png")
+        End If
+
+        btnLightSwitch.Content = ""
+
+        Dim switchBrush As New ImageBrush()
+        switchBrush.ImageSource = New BitmapImage(New Uri(switchPath, UriKind.Absolute))
+        switchBrush.Stretch = Stretch.Uniform
+
+        btnLightSwitch.Background = switchBrush
+    End Sub
+
+
+
+    Private Sub AddToLog(message As String)
+        txtCombatLog.AppendText(vbCrLf & message)
+        txtCombatLog.ScrollToEnd()
+    End Sub
 
 
     '--------------------------------------------------------------------------------------------------------------
@@ -68,6 +462,71 @@ Class MainWindow
 
 
     'Main Character MOvement and other actions
+    Private Sub Window_KeyDown(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyDown
+        If e.Key = Key.D Then
+            rightKey = True
+        End If
+
+        If e.Key = Key.A Then
+            leftKey = True
+        End If
+
+        If e.Key = Key.W Then
+            upKey = True
+        End If
+
+        If e.Key = Key.S Then
+            downKey = True
+        End If
+
+        If e.Key = Key.Space Then
+            spaceKey = True
+        End If
+    End Sub
+
+    Private Sub Window_KeyUp(sender As Object, e As KeyEventArgs) Handles DeadPowerGame.KeyUp
+        If e.Key = Key.D Then
+            rightKey = False
+        End If
+
+        If e.Key = Key.A Then
+            leftKey = False
+        End If
+
+        If e.Key = Key.W Then
+            upKey = False
+        End If
+
+        If e.Key = Key.S Then
+            downKey = False
+        End If
+
+        If e.Key = Key.Space Then
+            spaceKey = False
+        End If
+    End Sub
+
+    Private Sub MoveLeft()
+        Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) - 2)
+        rectPlayer = imageToRect(imgPlayer)
+    End Sub
+
+    Private Sub MoveRight()
+        Canvas.SetLeft(imgPlayer, Canvas.GetLeft(imgPlayer) + 2)
+        rectPlayer = imageToRect(imgPlayer)
+    End Sub
+
+    Private Sub MoveUp()
+        Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) - 2)
+        rectPlayer = imageToRect(imgPlayer)
+    End Sub
+
+    Private Sub MoveDown()
+        Canvas.SetTop(imgPlayer, Canvas.GetTop(imgPlayer) + 2)
+        rectPlayer = imageToRect(imgPlayer)
+    End Sub
+
+
 
     'Main Character 
 
@@ -79,11 +538,97 @@ Class MainWindow
     '--------------------------------------------------------------------------------------------------------------
 
     'Enemy Defeat
+    Private Sub HandleEnemyDefeat(enemy As Enemy)
+        If enemy.LootDrop <> "" Then
+
+            If Not player.Inventory.Contains(enemy.LootDrop) Then
+                player.PickUpItem(enemy.LootDrop)
+                AddToLog("You found: " & enemy.LootDrop)
+                UpdateInventoryDisplay()
+
+                If enemy.LootDrop = "Radio" Then
+                    AddToLog("OBJECTIVE COMPLETE: You found the emergency radio!")
+                    AddToLog("Static crackles through the speaker. You may finally have a way to call for rescue.")
+                    AddToLog("Find a safe place to broadcast your signal.")
+                End If
+            End If
+
+        End If
+
+        btnAttack.Visibility = Visibility.Collapsed
+        UpdateRoomDisplay()
+        UpdateHealthBars()
+        AddToLog("The room is now clear.")
+    End Sub
+
 
     'Enemy Movement
 
-    'Enemy Collision
+    Private Sub MoveZombieTowardPlayer()
+        If currentRoom.Enemy Is Nothing Then Return
+        If Not currentRoom.Enemy.IsAlive() Then Return
+        If imgEnemy.Visibility <> Visibility.Visible Then Return
 
+        Dim zombieX As Double = Canvas.GetLeft(imgEnemy)
+        Dim zombieY As Double = Canvas.GetTop(imgEnemy)
+
+        Dim playerX As Double = Canvas.GetLeft(imgPlayer)
+        Dim playerY As Double = Canvas.GetTop(imgPlayer)
+
+        If Double.IsNaN(zombieX) Then zombieX = 0
+        If Double.IsNaN(zombieY) Then zombieY = 0
+        If Double.IsNaN(playerX) Then playerX = 0
+        If Double.IsNaN(playerY) Then playerY = 0
+
+        If zombieX < playerX Then
+            Canvas.SetLeft(imgEnemy, zombieX + zombieSpeed)
+        ElseIf zombieX > playerX Then
+            Canvas.SetLeft(imgEnemy, zombieX - zombieSpeed)
+        End If
+
+        If zombieY < playerY Then
+            Canvas.SetTop(imgEnemy, zombieY + zombieSpeed)
+        ElseIf zombieY > playerY Then
+            Canvas.SetTop(imgEnemy, zombieY - zombieSpeed)
+        End If
+    End Sub
+
+    'Enemy Collision
+    Private Sub CheckZombiePlayerCollision()
+        If currentRoom.Enemy Is Nothing Then Return
+        If Not currentRoom.Enemy.IsAlive() Then Return
+        If imgEnemy.Visibility <> Visibility.Visible Then Return
+
+        Dim playerRect As Rect = imageToRect(imgPlayer)
+        Dim zombieRect As Rect = imageToRect(imgEnemy)
+
+        If playerRect.IntersectsWith(zombieRect) Then
+            If zombieCanDamage Then
+                player.Health -= zombieTouchDamage
+
+                AddToLog("The zombie claws Sam Stones for " & zombieTouchDamage & " damage!")
+                UpdateHealthBars()
+
+                zombieCanDamage = False
+                zombieDamageCooldown = zombieDamageCooldownMax
+
+                If Not player.IsAlive() Then
+                    AddToLog("Sam Stones has been overwhelmed by the zombie...")
+                    ShowGameOver()
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub UpdateZombieDamageCooldown()
+        If zombieCanDamage = False Then
+            zombieDamageCooldown -= 1
+
+            If zombieDamageCooldown <= 0 Then
+                zombieCanDamage = True
+            End If
+        End If
+    End Sub
 
 
 End Class
