@@ -34,7 +34,7 @@
         <ProgressBar x:Name="pbarEnemyHealth" Height="14"
                    Foreground="#8B0000" HorizontalAlignment="Left" Canvas.Left="578" VerticalAlignment="Top" Width="236" Canvas.Top="58"/>
 
-        <Button x:Name="btnLightSwitch" Canvas.Left="235" Canvas.Top="193" HorizontalAlignment="Left" VerticalAlignment="Top" Height="83" Width="88" RenderTransformOrigin="0.5,0.5">
+        <Button x:Name="btnLightSwitch" Canvas.Left="656" Canvas.Top="254" HorizontalAlignment="Left" VerticalAlignment="Top" Height="82" Width="88" RenderTransformOrigin="0.5,0.5">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -55,18 +55,17 @@
                FontFamily="Consolas" FontSize="12" Canvas.Left="144" Canvas.Top="364" HorizontalAlignment="Left" VerticalAlignment="Top" Width="512" Height="40"/>
         <Image x:Name="imgPlayer" Height="100" Canvas.Left="180" Canvas.Top="250" Width="100" Source="/Assets/images/Soldier.png"/>
         <Image x:Name="imgEnemy" Height="100" Canvas.Left="528" Canvas.Top="273" Width="100" Source="/Assets/images/Zombie.png"/>
-        
 
-        <Button x:Name="btnNorth" Content="▲ North" Width="120" Click="btnNorth_Click" HorizontalAlignment="Left" Canvas.Left="340" Canvas.Top="11" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFEEECEC" BorderBrush="{x:Null}" FontFamily="Stencil"/>
+
+        <Button x:Name="btnNorth" Content="▲ North" Width="120" Click="btnNorth_Click" HorizontalAlignment="Center" Canvas.Left="340" Canvas.Top="72" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFEEECEC" BorderBrush="{x:Null}" FontFamily="Stencil"/>
         <Button x:Name="btnSouth" Content="▼ South" Width="131" Click="btnSouth_Click" HorizontalAlignment="Left" Canvas.Left="356" Canvas.Top="331" VerticalAlignment="Top" Background="{x:Null}" Foreground="#FFF0EAEA" BorderBrush="{x:Null}" FontFamily="Stencil"/>
         <Button x:Name="btnEast"  Content="▶ East"  Width="90" Click="btnEast_Click" Canvas.Left="670" Canvas.Top="221" Background="{x:Null}" Foreground="#FFEBDADA" BorderBrush="{x:Null}" FontFamily="Stencil"/>
         <Button x:Name="btnWest"  Content="◀ West"  Width="90" Click="btnWest_Click" Canvas.Left="10" Canvas.Top="226" Background="{x:Null}" Foreground="#FFF0EBEB" BorderBrush="{x:Null}" FontFamily="Stencil"/>
-        <Button x:Name="btnAttack" Content="⚔ Attack"
-              Visibility="Collapsed" Click="btnAttack_Click" Canvas.Left="541" Canvas.Top="231"/>
-        <Button x:Name="btnSave" Content="💾 Save Game" Click="btnSave_Click" Canvas.Left="228" Canvas.Top="11"/>
-        <Image x:Name="imgWest" Height="374" Canvas.Left="-18" Canvas.Top="34" Width="41" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image x:Name="imgEast" Height="374" Canvas.Left="778" Canvas.Top="41" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image x:Name="imgNorth" Height="58" Canvas.Left="135" Canvas.Top="26" Width="566" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+        <Button x:Name="btnAttack" Content="⚔ Attack"  Canvas.Left="686" Canvas.Top="411" Visibility="Collapsed"/>
+        <Button x:Name="btnSave" Content="💾 Save Game" Click="btnSave_Click" Canvas.Left="21" Canvas.Top="421"/>
+        <Image x:Name="imgWest" Height="374" Canvas.Top="72" Width="29" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="imgEast" Height="374" Canvas.Left="819" Canvas.Top="72" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="imgNorth" Height="58" Canvas.Left="115" Canvas.Top="98" Width="566" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="-1"/>
@@ -76,7 +75,8 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Image x:Name="imgSouth" Height="44" Canvas.Left="55" Canvas.Top="415" Width="706" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="imgSouth" Height="44" Canvas.Left="123" Canvas.Top="421" Width="546" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Image x:Name="imgRadio" Height="100" Canvas.Left="615" Canvas.Top="185" Width="100" Source="/Assets/images/radio.png" Visibility="Collapsed"/>
 
     </Canvas>
 </Window>
