@@ -79,7 +79,7 @@ Class MainWindow
 
         Dim northRoom As New Room()
         northRoom.Name = "North Zombie Room"
-        northRoom.Description = "You find an unexpected guest."
+        northRoom.Description = "I have to get past that zombie to get the radio."
         northRoom.Exits.Add("South", "East Dark Room")
         northRoom.Enemy = New Enemy("Zombie", 100, 2)
         northRoom.Enemy.LootDrop = "Radio"
@@ -353,7 +353,7 @@ Class MainWindow
             Dim nextRoomName As String = currentRoom.Exits("North")
             currentRoom = gameRooms(nextRoomName)  ' gameRooms is a Dictionary of all rooms, so HOW DO I DECLARE A DICTIONARY?
             UpdateRoomDisplay()
-            AddToLog("You moved north into " & currentRoom.Name & ".")
+            AddToLog("Looks like some kind of " & currentRoom.Name & ".")
         Else
             AddToLog("There is no door to the north.")
             Me.Focus()
@@ -378,7 +378,7 @@ Class MainWindow
             Dim nextRoomName As String = currentRoom.Exits("East")
             currentRoom = gameRooms(nextRoomName)
             UpdateRoomDisplay()
-            AddToLog("You moved east into " & currentRoom.Name & ".")
+            AddToLog("Looks like some kind  " & currentRoom.Name & ".")
         Else
             AddToLog("There is no door to the east.")
         End If
@@ -390,7 +390,7 @@ Class MainWindow
             Dim nextRoomName As String = currentRoom.Exits("West")
             currentRoom = gameRooms(nextRoomName)
             UpdateRoomDisplay()
-            AddToLog("You moved west into " & currentRoom.Name & ".")
+            AddToLog("Looks like some kind of " & currentRoom.Name & ".")
         Else
             AddToLog("There is no door to the west.")
         End If
@@ -550,6 +550,7 @@ Class MainWindow
                 If enemy.LootDrop = "Radio" Then
                     AddToLog("A long distance radio!")
                     AddToLog("There is static crackling through the speaker. I finally have a way to call for rescue.")
+                    MessageBox.Show("Congratulations! You have found the radio and can now call for rescue. You win!")
                 End If
             End If
 
@@ -558,7 +559,7 @@ Class MainWindow
         btnAttack.Visibility = Visibility.Collapsed
         UpdateRoomDisplay()
         UpdateHealthBars()
-        AddToLog("The room is now clear.")
+
     End Sub
 
     Private Sub MoveZombieTowardPlayer()
